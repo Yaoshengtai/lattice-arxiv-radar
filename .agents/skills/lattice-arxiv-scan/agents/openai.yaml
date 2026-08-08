@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lattice arXiv Scan"
+  short_description: "Find and report high-fit arXiv papers"
+  default_prompt: "Use $lattice-arxiv-scan to run an arXiv scan with my current Lattice profile."

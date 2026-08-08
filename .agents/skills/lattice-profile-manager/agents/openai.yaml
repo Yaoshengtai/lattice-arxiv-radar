@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lattice Profile Manager"
+  short_description: "Process local research profile updates"
+  default_prompt: "Use $lattice-profile-manager to process my pending Lattice profile inbox."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "arXiv Paper Report"
+  short_description: "Create evidence-backed, math-aware paper reports"
+  default_prompt: "Use $arxiv-paper-report to analyze this paper with equation fidelity and source-grounded evidence."
