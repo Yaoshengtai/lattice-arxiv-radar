@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { cp, mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -11,7 +11,27 @@ const script = path.join(project, "scripts/lattice-data.mjs");
 
 async function fixture() {
   const cwd = await mkdtemp(path.join(tmpdir(), "lattice-data-test-"));
-  await cp(path.join(project, "research-data"), path.join(cwd, "research-data"), { recursive: true });
+  const data = path.join(cwd, "research-data");
+  await mkdir(path.join(data, "inbox"), { recursive: true });
+  await mkdir(path.join(data, "reports"), { recursive: true });
+  await writeFile(path.join(data, "profile.json"), JSON.stringify({
+    currentVersion: 1,
+    versions: [{
+      version: 1,
+      createdAt: "2026-08-08T00:00:00.000Z",
+      summary: "Empty test profile.",
+      topics: [],
+      methods: [],
+      mathematics: [],
+      categories: [],
+      exclusions: [],
+      seeds: [],
+      changeSummary: [],
+      sourceInboxIds: [],
+    }],
+  }));
+  await writeFile(path.join(data, "library.json"), JSON.stringify({ runs: [], papers: [] }));
+  await writeFile(path.join(data, "activity.json"), "[]");
   await mkdir(path.join(cwd, "work"));
   return cwd;
 }
