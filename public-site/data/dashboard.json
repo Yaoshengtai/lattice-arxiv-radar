@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-11T02:55:41.545Z",
+  "generatedAt": "2026-08-11T03:01:27.497Z",
   "profile": {
-    "currentVersion": 1,
+    "currentVersion": 3,
     "versions": [
       {
         "version": 1,
@@ -175,6 +175,164 @@
           "Added a second core cluster around learned proximal operators, proximal matching, diffusion models, and inverse problems.",
           "Recorded the associated mathematical techniques and likely arXiv categories without inferring unsupported exclusions."
         ]
+      },
+      {
+        "version": 3,
+        "createdAt": "2026-08-11T03:00:55.271Z",
+        "summary": "The profile is centered on rigorous machine learning theory for models that operate across variable input sizes, with core interests in any-dimensional universality and size transferability. Secondary interests include equivariant and graphon neural networks, learned proximal operators, diffusion models, and inverse problems.",
+        "topics": [
+          {
+            "name": "Any-dimensional learning and size generalization",
+            "weight": 98,
+            "evidence": [
+              "Two core seeds directly study universality and transferability for models defined across varying input dimensions.",
+              "Two interested seeds extend the theme through equivariant architectures and graphon-based size transferability."
+            ]
+          },
+          {
+            "name": "Invariant and equivariant neural networks",
+            "weight": 90,
+            "evidence": [
+              "A core seed studies invariant universality using symmetries and limit spaces.",
+              "Interested seeds cover representation-stable equivariant networks and invariant graphon networks."
+            ]
+          },
+          {
+            "name": "Theory of machine learning",
+            "weight": 90,
+            "evidence": [
+              "The core selections emphasize continuity, topology, universality, and architecture-level transfer guarantees.",
+              "All interested selections also favor convergence, expressivity, or approximation results over purely empirical modeling."
+            ]
+          },
+          {
+            "name": "Graph neural networks and graph limits",
+            "weight": 68,
+            "evidence": [
+              "Two interested seeds address graph parameters across sizes, graphons, higher-order GNNs, and invariant graph networks.",
+              "The core transferability papers also use graphs as an important application domain, but graph-specific work was not labeled core."
+            ]
+          },
+          {
+            "name": "Learned proximal operators and regularization",
+            "weight": 58,
+            "evidence": [
+              "Two interested seeds use learned proximal maps for principled priors, inverse problems, and generative sampling.",
+              "The repeated signal is meaningful but remains secondary because both submissions were labeled interested."
+            ]
+          },
+          {
+            "name": "Diffusion and generative modeling",
+            "weight": 44,
+            "evidence": [
+              "One interested seed develops proximal diffusion models using backward discretization of reverse-time SDEs.",
+              "This is a narrow exploratory signal rather than a core preference."
+            ]
+          },
+          {
+            "name": "Inverse problems",
+            "weight": 42,
+            "evidence": [
+              "One interested seed studies learned proximal networks for inverse problems with convergence guarantees.",
+              "The evidence supports exploratory interest in interpretable learned priors, not a strong standalone preference."
+            ]
+          }
+        ],
+        "methods": [
+          "Limit-space formulations for variable-size inputs",
+          "Transferability and size-generalization analysis",
+          "Universal approximation and expressivity analysis",
+          "Invariant and equivariant neural architecture design",
+          "Representation-stable neural networks",
+          "Graphon neural networks and higher-order GNNs",
+          "Learned proximal networks",
+          "Proximal matching",
+          "Reverse-time SDE discretization",
+          "Theory-guided numerical experiments"
+        ],
+        "mathematics": [
+          "Topology of infinite-dimensional limit spaces",
+          "Functional analysis",
+          "Representation theory and representation stability",
+          "Continuity and compactness arguments",
+          "Universal approximation theory",
+          "Graph limit theory and graphons",
+          "Cut distance and Lp approximation",
+          "Weisfeiler-Leman tests and homomorphism densities",
+          "Proximal operator theory and nonconvex regularization",
+          "Stochastic differential equations and KL-divergence analysis"
+        ],
+        "categories": [
+          "cs.LG",
+          "stat.ML",
+          "math.RT",
+          "math.FA",
+          "math.ST",
+          "cs.CV"
+        ],
+        "exclusions": [],
+        "seeds": [
+          {
+            "id": "seed-arxiv-2505.23599",
+            "title": "On Transferring Transferability: Towards a Theory for Size Generalization",
+            "sourceType": "arxiv",
+            "label": "core",
+            "arxivId": "2505.23599",
+            "active": true,
+            "addedAt": "2026-08-11T02:56:32.319Z"
+          },
+          {
+            "id": "seed-arxiv-2605.23156",
+            "title": "Any-Dimensional Invariant Universality",
+            "sourceType": "arxiv",
+            "label": "core",
+            "arxivId": "2605.23156",
+            "active": true,
+            "addedAt": "2026-08-11T02:56:51.855Z"
+          },
+          {
+            "id": "seed-arxiv-2306.06327",
+            "title": "Any-dimensional equivariant neural networks",
+            "sourceType": "arxiv",
+            "label": "interested",
+            "arxivId": "2306.06327",
+            "active": true,
+            "addedAt": "2026-08-11T02:57:23.989Z"
+          },
+          {
+            "id": "seed-arxiv-2503.14338",
+            "title": "Higher-Order Graphon Neural Networks: Approximation and Cut Distance",
+            "sourceType": "arxiv",
+            "label": "interested",
+            "arxivId": "2503.14338",
+            "active": true,
+            "addedAt": "2026-08-11T02:57:55.254Z"
+          },
+          {
+            "id": "seed-arxiv-2507.08956",
+            "title": "Beyond Scores: Proximal Diffusion Models",
+            "sourceType": "arxiv",
+            "label": "interested",
+            "arxivId": "2507.08956",
+            "active": true,
+            "addedAt": "2026-08-11T02:58:28.874Z"
+          },
+          {
+            "id": "seed-arxiv-2310.14344",
+            "title": "What's in a Prior? Learned Proximal Networks for Inverse Problems",
+            "sourceType": "arxiv",
+            "label": "interested",
+            "arxivId": "2310.14344",
+            "active": true,
+            "addedAt": "2026-08-11T02:58:45.772Z"
+          }
+        ],
+        "changeSummary": [
+          "Rebuilt the active research profile from six resubmitted arXiv seeds: two core and four interested.",
+          "Established any-dimensional universality and size transferability as the dominant core research direction.",
+          "Added equivariant networks, graphon neural networks, learned proximal operators, diffusion models, and inverse problems as secondary interests.",
+          "Recorded mathematical methods and likely arXiv categories without inferring unsupported exclusions."
+        ]
       }
     ]
   },
@@ -183,6 +341,19 @@
     "papers": []
   },
   "activity": [
+    {
+      "id": "c49e1a85-dc26-47f2-84f7-ddbee577f4ac",
+      "at": "2026-08-11T03:00:55.276Z",
+      "type": "profile",
+      "title": "Profile updated to v3",
+      "detail": "The profile is centered on rigorous machine learning theory for models that operate across variable input sizes, with core interests in any-dimensional universality and size transferability. Secondary interests include equivariant and graphon neural networks, learned proximal operators, diffusion models, and inverse problems.",
+      "changes": [
+        "Rebuilt the active research profile from six resubmitted arXiv seeds: two core and four interested.",
+        "Established any-dimensional universality and size transferability as the dominant core research direction.",
+        "Added equivariant networks, graphon neural networks, learned proximal operators, diffusion models, and inverse problems as secondary interests.",
+        "Recorded mathematical methods and likely arXiv categories without inferring unsupported exclusions."
+      ]
+    },
     {
       "id": "c5d4e805-38cc-46f6-b0f0-a7689aaa31dd",
       "type": "profile",
