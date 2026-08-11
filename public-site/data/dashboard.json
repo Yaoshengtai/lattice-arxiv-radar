@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-11T03:01:27.497Z",
+  "generatedAt": "2026-08-11T03:23:41.093Z",
   "profile": {
     "currentVersion": 3,
     "versions": [
@@ -337,10 +337,824 @@
     ]
   },
   "library": {
-    "runs": [],
-    "papers": []
+    "runs": [
+      {
+        "id": "scan-2026-08-11T03-22-49-769Z",
+        "createdAt": "2026-08-11T03:22:49.769Z",
+        "profileVersion": 3,
+        "candidateCount": 11,
+        "selectedIds": [
+          "2512.12805",
+          "2510.03923",
+          "2602.20370",
+          "2607.03798",
+          "2605.13278"
+        ],
+        "warnings": [
+          "Six active profile seeds were treated as known papers and excluded from recommendation.",
+          "The viable pool was assembled from profile-focused arXiv searches within the two-year window; five high-scoring papers were selected to preserve method diversity.",
+          "All selected reports are full reports reconstructed from arXiv PDFs; no downloaded paper source or code was executed."
+        ]
+      }
+    ],
+    "papers": [
+      {
+        "id": "2512.12805",
+        "title": "From Small to Large: Generalization Bounds for Transformers on Variable-Size Inputs",
+        "authors": [
+          "Anastasiia Alokhina",
+          "Pan Li"
+        ],
+        "primaryCategory": "cs.LG",
+        "publishedAt": "2025-12-14T19:02:16.000Z",
+        "updatedAt": "2026-01-09T01:53:29.000Z",
+        "score": 98,
+        "breakdown": {
+          "semantic": 98,
+          "topic": 100,
+          "method": 96,
+          "style": 98,
+          "recency": 92
+        },
+        "rationale": "The closest match to the profile's core: a limit-space theory of Transformer size generalization on graphon and manifold samples, with explicit intrinsic-dimension and positional-encoding stability rates.",
+        "tags": [
+          "Size generalization",
+          "Transformers",
+          "Graphons",
+          "Point clouds",
+          "Generalization theory",
+          "Positional encodings"
+        ],
+        "mathDensity": "High",
+        "reportStatus": "Ready",
+        "abstractUrl": "https://arxiv.org/abs/2512.12805",
+        "pdfUrl": "https://arxiv.org/pdf/2512.12805",
+        "htmlUrl": "https://arxiv.org/html/2512.12805",
+        "sourceUrl": "https://arxiv.org/src/2512.12805",
+        "firstRecommendedAt": "2026-08-11T03:22:49.769Z",
+        "runId": "scan-2026-08-11T03-22-49-769Z",
+        "report": {
+          "report_level": "full",
+          "executive_summary": "This paper develops a theory of size generalization for Transformers acting on variable-cardinality geometric inputs. The authors model each finite input as an IID discretization of a continuous tokenset: point clouds arise from manifolds and graphs from graphons. They define a continuous-domain Transformer and compare its output with the ordinary finite-token Transformer obtained by replacing integrals with empirical averages. The main result is a uniform output-convergence bound whose dominant terms scale, up to logarithms, as n^{-1/(D_chi+2)} and n^{-rho}; D_chi measures intrinsic geometric regularity and rho measures stability of the relative positional encoding (RPE). This output comparison is then combined with a uniform-convergence argument to obtain a learning bound containing discretization, RPE, and finite-training-sample errors (Theorems 1-2, pp. 4-5). The analysis is unusually relevant to variable-size learning because the guarantee is uniform over the hypothesis class rather than for a single fixed network, so it applies to a model selected from data (discussion following Theorem 2, p. 5). A technically important conclusion is that positional encoding is not an auxiliary implementation detail: a discrete RPE must converge to a continuous counterpart. The paper proves stability for scaled random-walk landing probabilities and gives a counterexample for shortest-path distance on an Erdos-Renyi graphon (Proposition 1 and discussion, pp. 6-7). Semi-synthetic experiments on ModelNet40 point clouds and graphon-sampled graphs produce log-log slopes close to the predicted rates, while a graph regression experiment finds markedly better size generalization with the stable random-walk RPE than with shortest-path RPE (Figures 3-4, p. 8). The scope is geometric IID sampling rather than causal language or image structure, and constants grow strongly with depth and Lipschitz parameters; the authors explicitly leave non-IID modalities and a broader characterization of stable positional encodings for future work (Section 6, p. 8).",
+          "why_it_fits": "This is an exceptionally close match to the active profile's dominant interest in any-dimensional learning and size transferability. It supplies a concrete limit-space formulation for variable-size inputs, treats graphs and point clouds in one continuous-discretization framework, and makes continuity/stability properties operational through an explicit bound. It also complements the profile's seed on transferability by specializing the general limit-space idea to the global softmax-attention mechanism, where normalization and positional information create difficulties absent from average-aggregation MPNNs (Sections 3.1 and 4, pp. 5-6). The paper is strongly mathematical: it uses metric-measure regularity, covering/concentration arguments, local Lipschitz propagation, uniform convergence, and graphon transition kernels. The combination of theory, architecture-level design guidance, and rate-matching experiments aligns directly with the profile's preference for rigorous guarantees supported by targeted numerical evidence. A particularly fertile connection is to any-dimensional universality: the paper explains when a fixed Transformer has a coherent continuous limit and transfers across discretization sizes, while universality work asks what functions such dimension-independent families can represent. Studying both together could separate approximation power from discretization stability.",
+          "problem_formulation": "Let T=((chi,dist,mu),f) be a continuous tokenset, with chi a probability-metric space and f its token-feature map. A sampled tokenset T_n=(X,f) is formed by IID draws X={X_1,...,X_n} from mu (Definitions 1-2, pp. 1-2). The authors define a Transformer Theta on both continuous and discrete tokensets by attention-weighted integration (or empirical summation), followed by pooling (Definition 3, pp. 2-3). The central approximation question is how rapidly ||Theta(T_n)-Theta(T)|| decreases uniformly over a hypothesis class H as n grows. For learning, samples have variable token counts n drawn above a lower threshold N and labels attached to their underlying continuous tokensets; the target quantity is the uniform gap between empirical and population risk (Equation (1), p. 3). The data space is assumed admissible: f is Lipschitz, every metric ball has probability mass bounded below by a power r^{D_chi}, and RPEs satisfy a concentration notion of (rho,R)-stability under discretization (Definitions 4-6, pp. 3-4). The problem is therefore not unrestricted length extrapolation. It is size generalization for geometric inputs generated as sufficiently regular IID samples of a common continuous object, under bounded-depth Transformers with Lipschitz logit, value, and pooling maps and stable RPEs.",
+          "contributions": [
+            "A continuous/discrete Transformer formalism for variable-size geometric tokensets, covering manifold point clouds and graphon-sampled graphs in a common metric-measure model (Definitions 1-3, pp. 1-3).",
+            "A uniform Transformer output-convergence theorem with separate discretization and positional-encoding terms, and a corresponding learning bound that adds ordinary finite-sample statistical error (Theorems 1-2, pp. 4-5).",
+            "A proof strategy that controls nonlinear softmax aggregation through one-layer discretization and perturbation lemmas, preserves local Lipschitz regularity across layers, and recursively propagates error through the network (Lemmas 1-2 and Theorem 3, pp. 5-6).",
+            "A formal stability criterion for relative positional encodings, a proof that scaled k-step random-walk landing probabilities satisfy it under graphon sampling, and a demonstration that shortest-path distance need not satisfy it (Definition 5 and Proposition 1, pp. 3 and 6-7).",
+            "Experiments whose observed worst-case output-error slopes are close to the predicted intrinsic-dimension rates and whose stable-RPE comparison supports the architectural implication of the theory (Figures 3-4, p. 8)."
+          ],
+          "method": "The argument first embeds finite and continuous inputs in the same tokenset formalism. In a continuous attention layer, softmax normalization is an integral against mu; on a sample it becomes an empirical average. The authors decompose the discrepancy of one layer into a Monte Carlo/discretization term and a perturbation term caused by differences in hidden states and RPEs (Section 4, p. 5). The first term is controlled uniformly for locally Lipschitz hidden features using metric-measure regularity; the resulting exponent is 1/(D_chi+2), with D_chi acting like intrinsic dimension (Lemma 1, p. 5). The second term bounds propagation through logit, exponential normalization, and value maps when the total hidden-state/RPE perturbation is sufficiently small (Lemma 2, pp. 5-6). Recursing these estimates through K layers yields a high-probability uniform output bound with depth- and Lipschitz-dependent constants (Theorem 3, p. 6), which is integrated to obtain Theorem 1. The learning bound then compares each discrete example to its latent continuous tokenset and applies the Bretagnolle-Huber-Carol inequality for the remaining class-label sampling error (end of Section 4, p. 6). For positional encodings, the authors analyze powers of the random-walk transition matrix on a graph sampled from a sparse graphon and show concentration of n[P^k]_{ij} around a continuous k-step transition kernel. They contrast this with shortest-path distance, whose value for two vertices in a constant 1/2 graphon remains random rather than converging to a deterministic pairwise quantity (Proposition 1, pp. 6-7).",
+          "key_equations": [
+            {
+              "label": "Definition 5",
+              "latex": "\\Pr\\!\\left[\\left\\|p(X_i,X_j;T_n)-p(X_i,X_j;T)\\right\\|\\ge R n^{-\\rho}\\tau\\right]\\le C n^2\\left(e^{-\\tau^2}+e^{-\\tau}\\right)",
+              "symbol_definitions": [
+                "T is a continuous tokenset and T_n is its n-token IID sample.",
+                "p is the relative positional encoding evaluated on the discrete or continuous tokenset.",
+                "rho is the stability exponent; R and C are constants; tau controls the tail probability."
+              ],
+              "interpretation": "The definition requires the discrete positional relation of a fixed sampled pair to approach a continuous counterpart at rate n^{-rho}, with an explicit concentration tail. This isolates positional encoding as an independent source of size-transfer error.",
+              "role": "Core regularity assumption linking positional encodings to the output and learning bounds.",
+              "assumptions": [
+                "The tokenset belongs to the stated domain D.",
+                "The comparison is made for sampled tokens X_i,X_j in the same IID discretization."
+              ],
+              "derivation_outline": "",
+              "locator": "Definition 5, Section 3, pp. 3-4",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.94,
+              "interpretation_confidence": 0.98
+            },
+            {
+              "label": "Theorem 1",
+              "latex": "\\mathbb{E}_{T_n\\sim_n T}\\!\\left[\\sup_{\\Theta\\in\\mathcal H}\\|\\Theta(T_n)-\\Theta(T)\\|_\\infty\\right]\\le (H_1+H_2\\log n)n^{-1/(D_\\chi+2)}+H_3 n^{-\\rho}\\log n",
+              "symbol_definitions": [
+                "mathcal H is the K-layer Lipschitz Transformer hypothesis class of Definition 6.",
+                "D_chi is the metric-measure intrinsic-dimension parameter.",
+                "rho is the RPE stability exponent.",
+                "H_1,H_2,H_3 depend on depth, Lipschitz constants, feature/RPE regularity, and the stability constant."
+              ],
+              "interpretation": "Transformer outputs on finite samples converge uniformly over all admissible learned parameters to outputs on the continuous object. The slower of geometric discretization and RPE stabilization controls the asymptotic rate.",
+              "role": "Principal size-consistency theorem and the intermediate result used for learning generalization.",
+              "assumptions": [
+                "T is (L_f,C_chi,D_chi)-admissible.",
+                "The Transformer class satisfies Definition 6, including stable RPEs and Lipschitz logit, value, and pooling maps.",
+                "The number of layers K is fixed and n is sufficiently large for the technical estimates."
+              ],
+              "derivation_outline": "Section 4 decomposes a one-layer discrepancy into discretization and perturbation errors, controls both with Lemmas 1-2, recursively propagates them through K layers in Theorem 3, and integrates the high-probability tail bound.",
+              "locator": "Theorem 1, Section 3, p. 4; proof overview in Section 4, pp. 5-6",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.97,
+              "interpretation_confidence": 0.98
+            },
+            {
+              "label": "Theorem 2",
+              "latex": "\\mathbb{E}\\!\\left[\\sup_{\\Theta\\in\\mathcal H}|R_{\\mathrm{emp}}(\\Theta)-R_{\\mathrm{exp}}(\\Theta)|\\right]\\le \\mathbb{E}_{n}\\!\\left[\\|L\\|_{\\mathrm{Lip}}\\frac{C_1+C_2\\log n}{n^{1/(D_\\chi+2)}}+\\|L\\|_{\\mathrm{Lip}}\\frac{C_3\\log n}{n^\\rho}\\right]+\\frac{2\\Gamma\\|L\\|_\\infty}{\\sqrt m}",
+              "symbol_definitions": [
+                "R_emp and R_exp are empirical and population risk from Equation (1).",
+                "m is the number of labeled training examples and Gamma the number of latent classes/tokenset types in the paper's setup.",
+                "L is the Lipschitz loss.",
+                "n is the variable token count drawn from P_{>=N}.",
+                "C_1,C_2,C_3 have the same parameter dependence as the output-bound constants."
+              ],
+              "interpretation": "The expected learning gap separates into finite-resolution error, positional-encoding error, and ordinary statistical error. Increasing training examples cannot compensate for an unstable RPE, while increasing token count cannot remove the m^{-1/2} term.",
+              "role": "Main learning-theoretic size-generalization guarantee.",
+              "assumptions": [
+                "Dataset generation follows the supervised tokenset model of Section 2.",
+                "The hypotheses and data satisfy Definitions 4-6.",
+                "The loss is Lipschitz and bounded."
+              ],
+              "derivation_outline": "Theorem 1 controls discrete-to-continuous output error uniformly over the learned hypothesis; a finite-class concentration inequality controls empirical risk on the latent continuous examples.",
+              "locator": "Theorem 2, Section 3, pp. 4-5",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.96,
+              "interpretation_confidence": 0.98
+            }
+          ],
+          "experiments": "Section 5 uses a lightweight one-attention-layer Transformer, global mean pooling, and a two-layer MLP with parameter operator norms normalized to one. To approximate a continuous reference, the authors use 10,000-point ModelNet40 mesh samples for point clouds and 5,000-node weighted graphon samples for graphs. At each smaller size they draw 100 inputs and train a model to maximize the output discrepancy, approximating the worst case over the hypothesis class (Section 5.1, p. 7). For a two-dimensional point-cloud manifold, theory predicts roughly n^{-1/4}; observed mean and mean-plus-standard-deviation slopes are n^{-0.29} and n^{-0.28}. For a one-dimensional two-block graphon with stable three-step random-walk RPE, theory predicts n^{-1/3}; observed slopes are n^{-0.38} and n^{-0.33} (Figure 3, p. 8). The second experiment classifies samples from a stochastic-block graphon versus a constant Erdos-Renyi graphon. Models train on 1,000 graphs with 400-1,600 nodes and test on 100 graphs with 5,000 nodes. The transition-matrix RPE yields substantially lower train/test generalization gaps than shortest-path distance, especially at the largest size mismatch (Figure 4 and Section 5.2, p. 8). These are controlled semi-synthetic validations of rate and mechanism, not broad benchmark claims about production Transformers.",
+          "limitations": [
+            "The data model assumes IID discretization of regular metric-measure objects; the authors explicitly leave causal or non-IID modalities such as language and images for future work (Section 6, p. 8).",
+            "The hypothesis class uses fixed depth and Lipschitz-bounded logit, value, and pooling maps. Constants grow strongly with depth and the Lipschitz parameters, so the theorem may be numerically loose for deep, unconstrained practical Transformers (Theorem 1 constants and Section 3.1, pp. 4-5).",
+            "Stable RPEs are assumed, and only one important graph construction is proved stable. A broader characterization of practical positional encodings remains open (Section 4.1 and Section 6, pp. 6 and 8).",
+            "The empirical studies are semi-synthetic and use a single-layer architecture optimized to expose worst-case output error; they do not establish downstream performance on diverse real datasets or large modern Transformer stacks (Section 5, pp. 7-8).",
+            "The analysis gives upper bounds and observed matching slopes in chosen settings, but it does not establish general minimax lower bounds for Transformer size generalization."
+          ],
+          "reproducibility": "The paper gives detailed data-generation recipes, sample sizes, model structure, norm constraints, training objective, and evaluation definitions in Section 5, with further details assigned to Appendix E (pp. 7-8 and appendix). A public code repository is not explicitly identified in the arXiv abstract page or the extracted main text. Reproducing the semi-synthetic experiments appears feasible from the written specification, but exact optimizer settings, random seeds, and environment details should be checked in Appendix E before attempting numerical replication. The report used the arXiv v2 PDF dated 9 January 2026 and reconstructed equations from the PDF; no TeX source was executed.",
+          "research_ideas": [
+            "Combine the paper's size-consistency conditions with any-dimensional invariant universality. One could ask for architecture classes that are simultaneously dense in a continuous limit space and have non-vacuous finite-n convergence rates, separating universality, transferability, and learnability in one theorem.",
+            "Develop a taxonomy of positional encodings by the stability exponent rho across graphon, manifold, and point-process limits. Resistance distance, heat kernels, spectral encodings, and learned equivariant encodings could be compared through a common concentration definition.",
+            "Replace the IID tokenset assumption with exchangeable but dependent sampling or with deterministic quadrature/mesh refinement, then identify how discrepancy, mixing, or fill distance changes the n^{-1/(D_chi+2)} term.",
+            "Study whether attention normalization can be redesigned to improve constants or rates. The proof identifies exponential normalization as a source of technical and constant growth; alternative kernels or temperature schedules might yield sharper dimension-transfer bounds.",
+            "Use the theoretical decomposition as a diagnostic regularizer: estimate empirical RPE instability across resolutions during training and penalize it directly, then test whether this predicts zero-shot size transfer better than training loss or conventional smoothness metrics."
+          ],
+          "warnings": [
+            "Equations were reconstructed from the arXiv PDF because structured HTML was unavailable; notation was preserved to the extent supported by the rendered source.",
+            "The term 'generalization' in the paper mixes discretization/size transfer and statistical generalization; the report keeps the three error sources separate.",
+            "No claim is made here that the theory applies directly to causal language-model context-length extrapolation."
+          ]
+        }
+      },
+      {
+        "id": "2510.03923",
+        "title": "On the Convergence and Size Transferability of Continuous-depth Graph Neural Networks",
+        "authors": [
+          "Mingsong Yan",
+          "Charles Kulick",
+          "Sui Tang"
+        ],
+        "primaryCategory": "cs.LG",
+        "publishedAt": "2025-10-04T19:59:21.000Z",
+        "updatedAt": "2026-04-18T00:12:03.000Z",
+        "score": 94,
+        "breakdown": {
+          "semantic": 94,
+          "topic": 93,
+          "method": 95,
+          "style": 96,
+          "recency": 89
+        },
+        "rationale": "Extends graphon transferability from finite-depth GNNs to whole continuous-depth trajectories, with well-posedness and explicit rates for smooth weighted and discontinuous binary graphons.",
+        "tags": [
+          "Size transferability",
+          "Graph neural differential equations",
+          "Graphons",
+          "Continuous depth",
+          "Dynamical systems",
+          "Convergence rates"
+        ],
+        "mathDensity": "High",
+        "reportStatus": "Ready",
+        "abstractUrl": "https://arxiv.org/abs/2510.03923",
+        "pdfUrl": "https://arxiv.org/pdf/2510.03923",
+        "htmlUrl": "https://arxiv.org/html/2510.03923",
+        "sourceUrl": "https://arxiv.org/src/2510.03923",
+        "firstRecommendedAt": "2026-08-11T03:22:49.769Z",
+        "runId": "scan-2026-08-11T03-22-49-769Z",
+        "report": {
+          "report_level": "full",
+          "executive_summary": "This paper establishes an infinite-node and size-transfer theory for continuous-depth graph neural networks (GNDEs). A GNDE evolves node features through an ODE whose vector field is parameterized by a spectral GNN; the authors define the corresponding continuum object, a Graphon Neural Differential Equation, by replacing the finite graph shift with a graphon integral operator (Equation (9), p. 10). Under continuous-in-time filter coefficients and a Lipschitz activation, they prove existence and uniqueness of the continuum dynamics (Theorem 3, p. 10). They then embed each finite GNDE as a piecewise-constant graphon feature trajectory and prove that, after suitable node permutations, the entire trajectory converges uniformly in time in C([0,T];L^2), rather than merely at finitely many layer outputs (Theorem 4 and discussion, pp. 11-12). Explicit rates are derived for two deterministic sampling regimes. For weighted graphs sampled on a grid from Holder graphons and Holder initial features, the trajectory error is O(n^{-alpha}), with alpha the smaller smoothness exponent (Theorem 5, p. 13). For unweighted graphs induced by binary graphons, the rate depends on the upper box-counting dimension b of the support boundary and is nearly O(n^{-min(1-b/2,alpha_2)}) (Theorem 6, pp. 14-15). These estimates immediately give pairwise size-transfer bounds between graphs of sizes n_1 and n_2 that share filters. Experiments use smooth, hierarchical-block, and fractal graphons, real node-classification benchmarks, and learned graph diffusion dynamics. The synthetic convergence trends follow the theory qualitatively; real-data transfer error declines with subgraph size; and on ogbn-arxiv, training on half the graph roughly halves the reported training time while retaining 64% versus 67% accuracy for full-graph training (Figure 4 and Table 3, pp. 18-19). The analysis is rigorous but restricted to spectral GCN-parameterized GNDEs on static, deterministically sampled graphs; stochastic graph sampling, attention-based models, general message passing, and joint graph-size/time-discretization convergence remain open (Section 5, p. 23).",
+          "why_it_fits": "The paper directly targets the profile's core interest in size transferability, graph limits, and mathematically controlled neural architectures. It extends the familiar graphon-limit program from finite-depth GNNs to continuous-depth dynamics, where the relevant object is an entire function-valued trajectory. This is a substantive conceptual step: a GNDE contains infinitely many intermediate states, so pointwise-in-layer convergence is insufficient for both forward and backward dynamics (discussion after Theorem 4, pp. 11-12). The analysis combines graphon theory, functional analysis, ODE well-posedness, Gronwall stability, Holder approximation, and fractal boundary dimension, matching the profile's preference for deep mathematical structure. The rate formulas also connect abstract regularity to practical transfer: smoother weighted graphons give faster rates, while geometric complexity of a binary graphon's boundary degrades guarantees (Theorems 5-6, pp. 13-15). Relative to the profile's higher-order graphon and general transferability seeds, this work introduces a different architectural axis - continuous depth - and a stronger trajectory-wise notion of consistency. It therefore diversifies the recommendation set without leaving the core research direction.",
+          "problem_formulation": "A finite GNDE is an ODE dX_G(t)/dt=GNN(X_G(t);S_G,H(t)) on an n-node graph, where S_G=W_G/n is the normalized graph shift, H(t) contains time-varying convolutional filters, and Z_G is the initial node-feature matrix (Equation (10), p. 11). The continuum limit is a Graphon-NDE for a feature function X(u,t) on u in [0,1], driven by a graphon neural network WNN(.;W,H(t)) (Equation (9), p. 10). The first question is well-posedness of this infinite-dimensional ODE. The second is whether a sequence of graph-feature pairs converging to (W,Z) produces GNDE trajectories converging uniformly over a fixed time horizon. The third is quantitative: under concrete graph sampling schemes, how does the trajectory error depend on node count and graphon regularity, and what does that imply for zero-shot transfer between sizes? Weighted graphs are deterministic grid samples of a smooth graphon; unweighted graphs are induced by whether a mesh cell intersects the support of a binary graphon (Equations (11)-(16), pp. 12-13). The paper measures convergence in C([0,T];L^2), allowing simultaneous control of all intermediate continuous-depth states.",
+          "contributions": [
+            "Definition of Graphon-NDEs as infinite-node limits of GNDEs with time-varying filters, together with existence and uniqueness under mild temporal-continuity and activation-Lipschitz assumptions (Equation (9), Assumptions AS0-AS1, and Theorem 3, p. 10).",
+            "Trajectory-wise convergence of finite GNDE solutions to the Graphon-NDE solution, uniform over time after admissible node relabelings (Theorem 4, pp. 11-12).",
+            "An optimal-order O(n^{-alpha}) trajectory rate for weighted mesh samples of Holder graphons and initial features, plus direct two-size transfer bounds (Theorem 5 and Equations (13)-(14), p. 13).",
+            "A rate for unweighted graphs generated from discontinuous binary graphons using upper box-counting dimension of the support boundary, extending rate analysis to a case not covered by smooth-graphon GNN results (Theorem 6 and discussion, pp. 14-15).",
+            "Numerical validation across graphon convergence, zero-shot node classification, and fitting of four graph diffusion dynamics, including computational evidence that subgraph training can retain much of full-graph accuracy at lower cost (Section 4, pp. 15-22)."
+          ],
+          "method": "The authors express both finite graphs and their feature matrices as induced piecewise-constant graphons/functions, resolving the dimensional mismatch between matrix-valued GNDE outputs and function-valued continuum outputs (discussion after Theorem 4, p. 12). A Graphon-NDE is treated as an ODE in an L^infinity function space. Theorem 3 adapts a Banach fixed-point argument for nonlinear graph-limit dynamics to vector-valued, multilayer spectral graph convolutions with continuous time-dependent filters. Stability estimates for the WNN vector field then yield a Gronwall inequality comparing two trajectories. Combined with convergence of the underlying graph-feature pairs, this gives uniform-in-time L^2 convergence (Theorem 4, pp. 11-12). Quantitative rates reduce the dynamic error to approximation errors for W and Z. For weighted graphs, piecewise-constant approximation of Holder functions produces n^{-alpha}, which is optimal for that approximation class (Theorem 5 discussion, p. 13). For binary graphons, smoothness is unavailable; the number of mesh cells crossing the support boundary is controlled by its upper box-counting dimension b, which yields the exponent 1-(b+epsilon)/2, limited also by feature smoothness (Theorem 6, p. 14). Triangle inequalities between two finite trajectories produce size-transfer estimates. The experiments approximate the continuum solution with a 5,000-node reference, use Dormand-Prince integration, and evaluate maximal relative trajectory error, transfer accuracy, induced-graphon error, and learned-dynamics trajectory error (Section 4, pp. 15-22).",
+          "key_equations": [
+            {
+              "label": "Equation (9)",
+              "latex": "\\frac{\\partial}{\\partial t}X(u,t)=\\operatorname{WNN}(X(u,t);W,H(t)),\\qquad X(u,0)=Z(u)",
+              "symbol_definitions": [
+                "u is the continuum node coordinate in I=[0,1].",
+                "X(.,t) is the graphon node-feature function.",
+                "W is the graphon.",
+                "H(t) is the collection of shared, time-varying spectral filter coefficients.",
+                "Z is the initial graphon feature function."
+              ],
+              "interpretation": "The finite graph neural ODE is lifted to a function-space ODE on a continuum of nodes. Shared filters survive the limit and act through graphon convolution.",
+              "role": "Definition of the limiting model on which all well-posedness and convergence results are based.",
+              "assumptions": [
+                "W is essentially bounded.",
+                "Z is essentially bounded.",
+                "Filter coefficients are temporally continuous and activation functions satisfy AS1 for Theorem 3."
+              ],
+              "derivation_outline": "",
+              "locator": "Equation (9), Section 3.1, p. 10",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Theorem 4",
+              "latex": "\\lim_{n\\to\\infty}\\left\\|X-X^{\\pi_n(G_n)}\\right\\|_{C([0,T];L^2(I;\\mathbb{R}^{1\\times F}))}=0",
+              "symbol_definitions": [
+                "X is the Graphon-NDE solution.",
+                "X^{pi_n(G_n)} is the induced graphon feature trajectory of the relabeled finite GNDE.",
+                "pi_n is an admissible permutation aligning the finite graph-feature representation with its limit.",
+                "T is the fixed time horizon."
+              ],
+              "interpretation": "Every time slice converges in L^2 simultaneously; the supremum over the whole trajectory vanishes as graph size grows.",
+              "role": "Central qualitative size-consistency and stability theorem.",
+              "assumptions": [
+                "AS0-AS1 hold.",
+                "The graph-feature sequence converges to (W,Z) in the paper's Definition 2.",
+                "W and Z are essentially bounded."
+              ],
+              "derivation_outline": "Finite GNDEs are rewritten as Graphon-NDEs with induced piecewise-constant inputs; stability of the function-space dynamics and Gronwall inequalities convert graph-feature convergence into trajectory convergence.",
+              "locator": "Theorem 4, Section 3.2, pp. 11-12",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.98,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Equation (13) / Theorem 5",
+              "latex": "\\left\\|X-X^{G_n}\\right\\|_{C([0,T];L^2(I;\\mathbb{R}^{1\\times F}))}\\le \\frac{C}{n^\\alpha},\\qquad \\alpha=\\min\\{\\alpha_1,\\alpha_2\\}",
+              "symbol_definitions": [
+                "alpha_1 and alpha_2 are Holder exponents of the weighted graphon W and initial feature Z.",
+                "C is independent of n but depends on model, time-horizon, and regularity constants.",
+                "X^{G_n} is the induced trajectory from the n-node weighted graph."
+              ],
+              "interpretation": "For smooth weighted graph sequences, GNDE trajectory error decays at the same approximation order as the least regular underlying object.",
+              "role": "Explicit weighted-graph convergence rate and foundation for the corresponding two-size transfer bound in Equation (14).",
+              "assumptions": [
+                "AS0-AS3 hold.",
+                "Graphs and features are deterministic grid samples specified in Equations (11)-(12).",
+                "alpha is in (0,1]."
+              ],
+              "derivation_outline": "Piecewise-constant approximation bounds for Holder W and Z are inserted into the trajectory-stability estimate.",
+              "locator": "Theorem 5 and Equation (13), Section 3.3.1, p. 13",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Equation (18) / Theorem 6",
+              "latex": "\\left\\|X-X^{G_n}\\right\\|_{C([0,T];L^2)}\\le \\frac{\\widetilde C}{n^{\\min\\{1-(b+\\varepsilon)/2,\\alpha_2\\}}}",
+              "symbol_definitions": [
+                "b is the upper box-counting dimension of the boundary of the support of the binary graphon.",
+                "epsilon is any value in (0,2-b).",
+                "alpha_2 is the Holder exponent of the initial feature function.",
+                "tilde C is independent of n."
+              ],
+              "interpretation": "For unweighted graphs, rate is controlled by geometric complexity of the discontinuity boundary: smooth one-dimensional boundaries permit nearly n^{-1/2}, while fractal boundaries closer to dimension two slow convergence.",
+              "role": "Quantitative extension to discontinuous binary graphons.",
+              "assumptions": [
+                "AS0, AS1, and AS3 hold.",
+                "W is binary-valued and b lies in [1,2).",
+                "The graph construction follows Equations (15)-(16) and n exceeds an epsilon- and W-dependent threshold."
+              ],
+              "derivation_outline": "Mesh cells intersecting the binary support boundary are counted using box dimension; their measure controls graphon approximation error, which is propagated through the GNDE stability bound.",
+              "locator": "Theorem 6 and Equation (18), Section 3.3.2, p. 14",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.97,
+              "interpretation_confidence": 0.98
+            }
+          ],
+          "experiments": "The first experiment tests rates on four main graphons: Lipschitz and Holder-1/2 tent graphons, a hierarchical stochastic block model with boundary dimension one, and a hexaflake with boundary dimension about 1.77. GNDEs use two-layer scalar-feature GNN vector fields with constant random filters; a 5,000-node trajectory is the reference, and errors for 550-1,950 nodes are measured as the maximum relative L^2 error over t in [0,1] using a fifth-order Dormand-Prince solver (Section 4.1, pp. 15-16). Figure 3 reports behavior matching n^{-1} and n^{-1/2} for the smooth tent cases and slower convergence for the higher-complexity fractal boundary, although binary-graph empirical rates are faster than the pessimistic worst-case theorem. The second experiment trains GNDEs on random subgraphs containing 10%-90% of nodes from Cora, Pubmed, Citeseer, Cornell, Texas, Wisconsin, Squirrel, Chameleon, Actor, and ogbn-arxiv, then transfers unchanged weights to the full graph. Transfer error and induced-graphon error decrease with subgraph size; subgraph and full-graph accuracies become similar (Figure 4, pp. 17-19). Table 3 reports that on ogbn-arxiv a 50% subgraph gives 64% accuracy with 8.94 seconds per 200-epoch unit versus 67% and 19.98 seconds on the full graph (p. 19). The third experiment fits linear heat, nonlinear heat/Kuramoto, Allen-Cahn, and nonlinear consensus trajectories on five graphons with 10 random Fourier initial conditions; Table 5 reports trajectory-wise errors and Figure 6 visualizes where errors accumulate (pp. 19-22).",
+          "limitations": [
+            "The proofs cover GNDEs parameterized by a specific spectral GCN family with symmetric static graph structure. General message passing, attention-based GNNs, and non-symmetric architectures require new analysis (Section 5, p. 23).",
+            "Explicit rates use deterministic graph sampling. Extending trajectory-wise rates to stochastic graphon samples requires concentration arguments not supplied here (Section 5, p. 23).",
+            "For binary graphons, the rate depends on a chosen representative's boundary dimension, which can change under null-set modifications or measure-preserving rearrangements; it is not solely an invariant of the graphon equivalence class (discussion after Theorem 6, p. 14).",
+            "The unweighted-graph rate is acknowledged to be pessimistic relative to experiments (Sections 3.3.2 and 4.1, pp. 14 and 16).",
+            "Practical GNDEs are numerically discretized. A rigorous two-scale result jointly controlling graph size n and solver step h is left open; the paper only states the consistency requirement h^p much smaller than n^{-r} (Section 5, p. 23).",
+            "The real-data evaluation is intended to demonstrate transfer behavior rather than state-of-the-art node classification, and random induced subgraphs may not realize the deterministic sampling assumptions of the rate theorems (Section 4.2, p. 17)."
+          ],
+          "reproducibility": "The paper identifies the torchdiffeq implementation base, the GNDE code lineage from Poli et al., optimizer family, major architectural choices, data splits, graph-sampling percentages, ODE solver, reference node count, time range, Fourier initial conditions, and key hyperparameters; additional details and dataset statistics are delegated to Appendices E-F (Sections 4.1-4.3, pp. 15-21). No dedicated code URL is explicitly shown in the arXiv abstract page or extracted main text. The specification is relatively strong for synthetic replication, but exact seeds, hardware, and all tuning ranges should be recovered from the appendices. The report used arXiv v2 dated 18 April 2026 and PDF reconstruction; downloaded sources were not executed.",
+          "research_ideas": [
+            "Prove a unified transfer theorem for continuous-depth architectures whose vector fields are any-dimensional equivariant networks, using the profile's limit-space continuity framework rather than graphons alone.",
+            "Establish stochastic-sampling rates for binary and weighted graphons, separating graph sampling noise, feature sampling noise, ODE stability, and numerical solver error in a single high-probability bound.",
+            "Develop invariant regularity descriptors for discontinuous graphons that replace representative-dependent boundary box dimension, perhaps through cut-distance approximation profiles or infima over measure-preserving representations.",
+            "Study continuous-depth higher-order graphon networks and ask whether stronger expressivity changes trajectory stability constants or introduces discontinuities analogous to higher-order WL-based architectures.",
+            "Use the two-scale observation to design adaptive solvers whose tolerance is coupled to estimated graph discretization error, avoiding wasted ODE accuracy on coarse graphs while preserving transfer consistency."
+          ],
+          "warnings": [
+            "The real-data subgraph experiment supports transfer empirically but does not directly validate the deterministic graphon rate assumptions.",
+            "The reported ogbn-arxiv timing comparison is specific to the paper's implementation and hardware context; it should not be generalized as a universal speedup.",
+            "Equations were reconstructed from the PDF; the simplified Equation (18) display omits the full function-space dimensions in its norm but preserves the stated exponent and role."
+          ]
+        }
+      },
+      {
+        "id": "2602.20370",
+        "title": "Quantitative Approximation Rates for Group Equivariant Learning",
+        "authors": [
+          "Jonathan W. Siegel",
+          "Snir Hordan",
+          "Hannah Lawrence",
+          "Ali Syed",
+          "Nadav Dym"
+        ],
+        "primaryCategory": "cs.LG",
+        "publishedAt": "2026-02-23T21:17:46.000Z",
+        "updatedAt": "2026-04-16T16:10:04.000Z",
+        "score": 92,
+        "breakdown": {
+          "semantic": 90,
+          "topic": 92,
+          "method": 94,
+          "style": 97,
+          "recency": 96
+        },
+        "rationale": "Turns invariant/equivariant universality into quantitative epsilon-approximation rates for DeepSets, Sumformers, Transformers, rigid-motion frames, and bi-Lipschitz invariant models.",
+        "tags": [
+          "Equivariant learning",
+          "Approximation rates",
+          "DeepSets",
+          "Transformers",
+          "Rigid motions",
+          "Quotient spaces"
+        ],
+        "mathDensity": "High",
+        "reportStatus": "Ready",
+        "abstractUrl": "https://arxiv.org/abs/2602.20370",
+        "pdfUrl": "https://arxiv.org/pdf/2602.20370",
+        "htmlUrl": "https://arxiv.org/html/2602.20370",
+        "sourceUrl": "https://arxiv.org/src/2602.20370",
+        "firstRecommendedAt": "2026-08-11T03:22:49.769Z",
+        "runId": "scan-2026-08-11T03-22-49-769Z",
+        "report": {
+          "report_level": "full",
+          "executive_summary": "This paper moves equivariant neural-network theory from qualitative universality to quantitative approximation rates. For alpha-Holder targets on an N-dimensional domain, prior ReLU theory gives optimal parameter scaling, up to logs, of epsilon^{-N/(2 alpha)}. The authors ask whether symmetry changes this exponent and whether architectures that hard-code the symmetry attain the same rate. Their answer, across three families, is that generic ReLU networks and specialized invariant/equivariant models have essentially the same asymptotic expressivity over symmetric targets when measured by parameter count (Section 1.1 and Table 1, pp. 4-6). For permutation symmetry, they prove that DeepSets can approximate invariant functions at a rate controlled by the intrinsic covering dimension of the quotient domain, and transfer the construction to permutation-equivariant Sumformers and two-block Transformers (Theorem 2, Corollaries 3, 5, and 6, pp. 11-12 and 21-23). For point clouds invariant to permutations and rigid motions, they show that the exponent depends on nd-dim(E(d)), the dimension after quotienting rigid motion; frame-averaged models can inherit the same rate (Theorem 8, Corollaries 9-10, and Proposition 18, pp. 25-36). For a closed isometry group with an invariant bi-Lipschitz embedding, the rate depends on the intrinsic covering dimension of K/G rather than the embedding's ambient dimension (Theorem 21, pp. 39-41). The headline implication is subtle: hard-coded equivariance does not reduce asymptotic approximation power, but neither does it improve the best parameter exponent relative to a generic MLP that approximates an already equivariant target. Practical gains from equivariance may therefore lie in sample efficiency, optimization, robustness, or constants ignored by asymptotic rates (discussion, pp. 6-7). The paper is purely theoretical and does not empirically test finite-scale constants. It also leaves rates open for many popular rotation-equivariant networks such as EGNN, DimeNet, Vector Neurons, and MACE, and acknowledges that parameter-count asymptotics may be too coarse to distinguish realistic models (discussion, pp. 6-7).",
+          "why_it_fits": "The active profile emphasizes invariant/equivariant neural networks, universality, representation-theoretic structure, and rigorous approximation. This paper is a direct next step beyond a standard universal approximation theorem: it asks how network size scales with desired accuracy and whether symmetry-aware parameterizations pay an expressivity cost. Its permutation results cover DeepSets, Sumformers, and Transformers, making it relevant to variable-size sets as well as symmetry-aware architectures. Its rigid-motion and quotient-space sections connect geometric invariance to intrinsic dimension, while the bi-Lipschitz section links invariant representations to stable metric embeddings. The result also creates a useful tension with size-transfer research. The paper fixes cardinality n and quantifies epsilon-approximation complexity; the profile's core work varies n and asks whether one architecture transfers across sizes. Combining these perspectives could reveal which rates remain uniform in n and which equivariant constructions become unstable or inefficient as cardinality grows. The paper's theorem-driven style, precise assumptions, and explicit open problems match the profile's preference for mathematical machine learning over purely empirical architecture proposals.",
+          "problem_formulation": "Let a group G act isometrically on a Euclidean input space V, and let f be invariant or equivariant under that action and alpha-Holder on a compact domain K. Given a target uniform error epsilon, the problem is to bound the number of ReLU-network parameters required to approximate f. The natural conjecture is that the exponent should depend on the effective dimension of the quotient K/G rather than the ambient dimension. The paper separates two questions: can an ordinary, non-equivariant ReLU network exploit the symmetry of the target to attain a quotient-dimension rate, and can a network architecture constrained to be invariant/equivariant attain the same rate? Three settings are treated. First, S_n acts by permuting n points in R^d; the specialized models are DeepSets, Sumformers, and Transformers. Second, E(d) x S_n acts on point clouds by rigid motions and permutations; the specialized models use frame averaging or canonicalization. Third, an arbitrary closed isometry group acts on R^N and the architecture factors through an invariant bi-Lipschitz embedding E. Covering numbers and Minkowski/intrinsic dimensions describe the complexity of K or K/G. Rates are asymptotic in epsilon and generally suppress logarithmic factors and constants.",
+          "contributions": [
+            "A constructive DeepSets approximation theorem for permutation-invariant functions on compact quotient domains, yielding parameter rate P=O(epsilon^{-d_intrinsic/(2 alpha)} log(1/epsilon)) under a covering-number assumption (Theorem 2 and Corollary 3, pp. 11-12).",
+            "Transfer of the permutation-invariant construction to permutation-equivariant Sumformer and standard Transformer architectures, including a two-block Transformer realization with the same approximation order (Corollaries 5-6, pp. 21-23).",
+            "Improved approximation results for ordinary ReLU networks on low-Minkowski-dimensional compact sets, reducing the exponent by a factor of two relative to prior rates summarized by the authors (Section 1.1 and Corollary 7, pp. 5 and 24-25).",
+            "Quotient-dimension rates for functions invariant to rotations or rigid motions and inheritance of those rates by frame-averaged invariant models (Theorem 8, Corollaries 9-10, and Proposition 18, pp. 25-36).",
+            "A general theorem showing that any invariant bi-Lipschitz representation supports an outer ReLU approximator whose rate depends on the intrinsic dimension of K/G, with max-filter invariants given as a concrete corollary (Theorem 21 and Corollary 22, pp. 39-41)."
+          ],
+          "method": "The permutation analysis begins with a generalized DeepSets map that independently embeds each point with a shared ReLU network Phi, sums within blocks of a partition, and applies an outer ReLU network rho (Equations (9)-(10), pp. 10-11). The proof constructs a finite code of point configurations at resolution 1/m and uses quotient covering numbers to control the outer interpolation network. Theorem 2 expresses the error through the modulus of continuity and gives explicit depths and widths; alpha-Holder continuity and a covering law N_r(K/S_n)<=C r^{-d_intrinsic} convert this to the epsilon exponent in Corollary 3. For equivariant maps, each output coordinate is represented by a shared invariant function with one distinguished point and a symmetric remainder; this yields Sumformer form and is compiled constructively into a two-block Transformer using an attention head that computes the global embedding sum (Corollaries 4-6, pp. 20-23). For rigid motions, the proof selects frames by Gram-Schmidt on full-rank point subsets, reduces the target to lower-dimensional canonical slices, and patches singular/rank-deficient cases. This gives ordinary ReLU rates based on nd-dim(E(d)); frame averaging then integrates an approximating backbone over group-dependent frames without increasing the asymptotic exponent (Section 4, pp. 25-38). In the general setting, an invariant bi-Lipschitz map E identifies the quotient K/G with a metric-stable embedded set. The induced target f tilde composed with E^{-1} remains Holder, and low-dimensional approximation on E(K) gives the outer-network rate (Lemma 20 and Theorem 21, pp. 39-40).",
+          "key_equations": [
+            {
+              "label": "Equation (10)",
+              "latex": "x=(x_1,\\ldots,x_n)\\longmapsto \\rho\\!\\left(\\sum_{i=1}^n\\Phi(x_i)\\right)",
+              "symbol_definitions": [
+                "x_i is the i-th point in R^d.",
+                "Phi is a shared ReLU feature network.",
+                "rho is an outer ReLU network acting on the summed invariant representation."
+              ],
+              "interpretation": "This is the DeepSets architecture. Sharing Phi and summing removes dependence on point order; the outer map reconstructs the target invariant.",
+              "role": "Primary architecture for the permutation-invariant quantitative approximation result.",
+              "assumptions": [
+                "Inputs have a fixed cardinality n in the theorem.",
+                "The target is invariant under S_n."
+              ],
+              "derivation_outline": "",
+              "locator": "Equation (10), Section 3.1, p. 11",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Corollary 3",
+              "latex": "P\\le C\\,\\varepsilon^{-d_{\\mathrm{intrinsic}}/(2\\alpha)}\\left(1+|\\log\\varepsilon|\\right)",
+              "symbol_definitions": [
+                "P is the total number of parameters in Phi and rho.",
+                "epsilon is the uniform approximation tolerance.",
+                "alpha is the Holder exponent of the target.",
+                "d_intrinsic controls the quotient covering numbers N_r(K/S_n).",
+                "C is independent of epsilon but depends on fixed geometry and smoothness parameters."
+              ],
+              "interpretation": "DeepSets match the optimal general ReLU exponent, up to a logarithm, on permutation-invariant alpha-Holder functions when complexity is measured by the intrinsic quotient dimension.",
+              "role": "Main quantitative rate for permutation-invariant architectures.",
+              "assumptions": [
+                "K is permutation invariant and N_r(K/S_n)<=C_1 r^{-d_intrinsic}.",
+                "d_intrinsic>=2d+2 and 0<alpha<=1.",
+                "The target modulus satisfies omega(f,t)<=t^alpha."
+              ],
+              "derivation_outline": "Set m proportional to epsilon^{-1/alpha} in Theorem 2 and count the explicit widths and depths; the quotient covering term dominates under the stated dimension condition.",
+              "locator": "Corollary 3, Section 3.1, p. 12",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Corollary 6 / Equation (67)",
+              "latex": "|f(X)_i-T(X)_i|\\le 2\\,\\omega\\!\\left(f,\\frac{1}{2m}\\right)",
+              "symbol_definitions": [
+                "f is an S_n-equivariant map on n points.",
+                "T is the constructed two-block Transformer.",
+                "i indexes an output point.",
+                "omega is the target's modulus of continuity and m is the resolution parameter."
+              ],
+              "interpretation": "A standard Transformer can implement the omit-one-sum equivariant construction and inherits the quantitative error of the underlying invariant approximation.",
+              "role": "Bridge from the constructive Sumformer/DeepSets proof to the standard attention architecture.",
+              "assumptions": [
+                "Fixed input cardinality n.",
+                "The Transformer feed-forward blocks contain the specific ReLU networks constructed in Corollary 5.",
+                "The architecture dimensions scale with m as stated in the corollary."
+              ],
+              "derivation_outline": "The first feed-forward stage computes Phi(x_i) and its negation; a uniform attention head produces the global sum, residual coordinates recover the omit-one sum, and the second feed-forward stage applies rho.",
+              "locator": "Corollary 6 and Equation (67), Section 3.3, p. 23",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.98,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Theorem 21",
+              "latex": "P\\!\\left(\\frac{1}{\\varepsilon}\\right)^{d_{\\mathrm{intrinsic}}/(2\\alpha)}\\log\\!\\left(\\frac{1}{\\varepsilon}\\right)",
+              "symbol_definitions": [
+                "P is a constant depending on the group, ambient geometry, bi-Lipschitz constants, and quotient covering parameters.",
+                "d_intrinsic is the covering dimension exponent of K/G.",
+                "alpha is the Holder exponent.",
+                "The full approximator has form psi composed with the invariant embedding E."
+              ],
+              "interpretation": "A metric-stable invariant embedding does not force approximation complexity to depend on its possibly large output dimension; the exponent is governed by the intrinsic quotient geometry.",
+              "role": "General approximation-rate theorem for bi-Lipschitz invariant representations.",
+              "assumptions": [
+                "G is a closed subgroup of Euclidean isometries.",
+                "E is invariant and bi-Lipschitz on quotient space.",
+                "K/G is compact of bounded diameter and satisfies the covering-number law.",
+                "f is invariant and alpha-Holder."
+              ],
+              "derivation_outline": "The quotient target remains Holder under the quotient metric; composition with E^{-1} preserves Holder regularity up to constants; a low-dimensional ReLU approximation theorem is applied on E(K).",
+              "locator": "Theorem 21, Section 5, pp. 39-40",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.96,
+              "interpretation_confidence": 0.98
+            }
+          ],
+          "experiments": "Not explicitly specified in the paper. The work is a mathematical approximation-theory paper and reports no original empirical benchmarks, optimization studies, finite-epsilon parameter counts, or runtime comparisons. Table 1 on p. 6 is a theorem summary, not experimental evidence. Consequently, the claim that generic and equivariant models have comparable expressivity is asymptotic and theorem-based; it is not an assertion that they train equally well or perform equally at realistic finite widths.",
+          "limitations": [
+            "The principal rates are asymptotic in epsilon and hide architecture- and dimension-dependent constants and logarithms that may dominate practical model sizes (discussion, pp. 6-7).",
+            "Permutation results fix cardinality n. They do not provide a single architecture or constants uniform across changing set sizes, so they are not by themselves size-transfer guarantees.",
+            "Rates remain open for many widely used rotation-equivariant models, including EGNN, DimeNet, Vector Neurons, and MACE; some may also require domain restrictions for universality (discussion, pp. 6-7).",
+            "The theory addresses approximation/existence, not learning dynamics, sample complexity, optimization, robustness, or whether the constructed parameters can be found efficiently.",
+            "The authors explicitly note that asymptotic parameter exponents may be too coarse to expose meaningful finite-scale differences between invariant and non-invariant models (discussion, p. 7).",
+            "Some theorems impose technical dimension conditions, compactness, Holder regularity, finite groups or stable bi-Lipschitz embeddings; applicability must be checked per architecture."
+          ],
+          "reproducibility": "There is no empirical pipeline to reproduce. Mathematical reproducibility is supported by explicit definitions, constructive network descriptions, theorem statements, and proofs throughout the 49-page paper. No code or data artifact is explicitly specified in the arXiv abstract page or extracted paper. A useful verification exercise would independently check parameter counting in Corollaries 3 and 6 and the quotient-dimension construction in Theorem 8. The report used arXiv v2 dated 16 April 2026 and reconstructed notation from the PDF; no source files were executed.",
+          "research_ideas": [
+            "Derive approximation rates uniform in set cardinality n for any-dimensional invariant/equivariant networks. This would connect fixed-n epsilon complexity to size transfer and clarify whether width or constants must grow with n.",
+            "Combine approximation rate, statistical sample complexity, and optimization conditioning in a three-axis comparison of generic MLPs versus hard-coded equivariant models. The paper suggests the asymptotic approximation axis alone cannot explain practical gains.",
+            "Obtain quantitative rates for graph neural networks beyond fixed-set permutation symmetry, especially higher-order/WL architectures and graphon-limit models where quotient geometry changes with n.",
+            "Analyze constants and pre-asymptotic regimes for DeepSets, Sumformers, and Transformers using the constructive proof, then test whether pairwise interaction architectures improve realistic efficiency despite sharing the same leading exponent.",
+            "Develop rates for noncompact or probabilistic domains using weighted norms and distribution-dependent covering dimensions, which may be more natural for scientific point clouds and particle systems than uniform approximation on compact sets."
+          ],
+          "warnings": [
+            "The displayed Theorem 21 rate uses P as a constant multiplier, matching the paper's statement; it is not the parameter count symbol used elsewhere without context.",
+            "Comparable asymptotic expressivity does not imply comparable training efficiency, data efficiency, or finite-width accuracy.",
+            "The Transformer result is for fixed n and a constructive two-block network, not arbitrary sequence lengths or causal attention."
+          ]
+        }
+      },
+      {
+        "id": "2607.03798",
+        "title": "Foundations of Equivariant Deep Learning: Unifying Graph and Sheaf Neural Networks",
+        "authors": [
+          "Yoshihiro Maruyama"
+        ],
+        "primaryCategory": "cs.LG",
+        "publishedAt": "2026-07-04T09:59:11.000Z",
+        "updatedAt": "2026-08-05T16:23:46.000Z",
+        "score": 89,
+        "breakdown": {
+          "semantic": 86,
+          "topic": 88,
+          "method": 95,
+          "style": 93,
+          "recency": 100
+        },
+        "rationale": "A representation-theoretic extension of equivariant networks to poset-indexed fibers, graphs, and sheaves, with transporter-law parameterization and diameter-sharp local universality.",
+        "tags": [
+          "Equivariant neural networks",
+          "Sheaf neural networks",
+          "Posets",
+          "Representation theory",
+          "Universal approximation",
+          "Higher-order GNNs"
+        ],
+        "mathDensity": "High",
+        "reportStatus": "Ready",
+        "abstractUrl": "https://arxiv.org/abs/2607.03798",
+        "pdfUrl": "https://arxiv.org/pdf/2607.03798",
+        "htmlUrl": "https://arxiv.org/html/2607.03798",
+        "sourceUrl": "https://arxiv.org/src/2607.03798",
+        "firstRecommendedAt": "2026-08-11T03:22:49.769Z",
+        "runId": "scan-2026-08-11T03-22-49-769Z",
+        "report": {
+          "report_level": "full",
+          "executive_summary": "This paper proposes Order-Equivariant Neural Networks (OENNs), a general framework for neural computation on finite partially ordered sets with symmetries and fiber-valued features. The index poset can be the face poset of a graph, simplicial complex, cell complex, or other incidence structure. A group G acts by order automorphisms, while linear transport maps specify how local feature coordinates transform between sites. The paper first characterizes every linear equivariant map by a transporter law on kernel blocks and a stabilizer-intertwiner constraint on representatives of pair orbits (Propositions 2.3-2.4, p. 3). It then defines nonlinear OENN layers using orbital affine maps and Reynolds-averaged blocks, which remain equivariant even when stabilizers act nontrivially on fibers (Definitions 2.7-2.10, p. 4). The architecture hierarchy distinguishes ordinary relation message passing, source-labeled pair-state local networks, and full globally mixing OENNs (Proposition 2.16, p. 5). The main approximation theorem proves that full OENNs are dense in continuous order-equivariant maps on compact invariant domains for any continuous non-polynomial activation (Theorem 3.3, p. 6). A more informative local theorem shows that bounded-depth communication cannot represent dependencies beyond its receptive field, but pair-state propagation can exactly compile global broadcast in a number of inter-site layers equal to directed diameter; this gives a diameter-sharp local universality result (Theorem 3.5, pp. 6-7). The graph and sheaf examples recover familiar message passing and sheaf diffusion as constrained cases while identifying when orbit-wise or source-aware structure is required (Section 4, pp. 7-9). The appendix relates OENN to category-equivariant neural networks via a Grothendieck construction and summarizes a CatHAR experiment from related work, but the core OENN theorems themselves receive no dedicated new empirical evaluation (Appendix A, pp. 18-19). The framework is mathematically broad but finite-domain: the poset and acting group are finite, full universality can require large pair-state memory, and the paper does not study stability across changing poset sizes or learnable discovery of the poset/category.",
+          "why_it_fits": "The profile strongly values invariant and equivariant architecture design, representation theory, universality, and structured inputs. OENN addresses all four in a novel way. Instead of treating symmetry as a group action on a flat set of coordinates, it incorporates incidence order, site-dependent fibers, stabilizer representations, and restriction maps. This makes graph neural networks, higher-order vertex-edge networks, and neural sheaves instances of one algebraic construction. The transporter law and orbit-stabilizer parameterization are especially aligned with the profile's representation-theoretic interests, while the universal approximation theorems connect directly to its universality focus. The paper also sharpens a recurrent question in graph learning: ordinary anonymous message passing is not universally expressive, whereas a source-labeled pair-state architecture can recover global expressivity at diameter depth. Relative to the profile's any-dimensional and graphon work, the main gap is precisely interesting: OENN is formulated on a fixed finite poset and does not analyze transfer as the domain grows. Extending its orbit/stabilizer constructions coherently across a sequence of posets or a limit category could be a promising bridge between finite equivariant universality and any-dimensional learning.",
+          "problem_formulation": "Let (P,<=) be a finite poset and G a finite group acting on P by order automorphisms. Each site p carries a vector space V_p, and each symmetry gamma carries features through isomorphisms T^V_{gamma,p}:V_p -> V_{gamma p} satisfying a cocycle law (Definition 2.1, pp. 2-3). The total input space is the direct sum X of the fibers, with an induced representation rho_X; outputs are similarly fibered. An order-equivariant map F must satisfy F(rho_X(gamma)x)=rho_Y(gamma)F(x) (Definition 2.2, p. 3). The first problem is to parameterize all linear maps satisfying this relation. The second is to build nonlinear equivariant networks when stabilizers may rotate or otherwise transform fiber coordinates, so ordinary coordinatewise nonlinearities need not commute with the action. The third is expressivity: determine when full or locality-masked OENNs can approximate every continuous order-equivariant map on a compact invariant set. Locality is represented by a G-invariant relation R on P; a pair-state network stores z_{q,p}, meaning information originating at p but currently located at q. Theorems then relate communication depth to directed distances in the R-graph. Finally, graph face posets and equivariant sheaves instantiate the abstract formalism.",
+          "contributions": [
+            "A complete orbit-wise characterization of linear order-equivariant maps using the transporter law and stabilizer intertwiners, generalizing parameter tying for permutation-equivariant layers (Propositions 2.3-2.4, p. 3).",
+            "A nonlinear OENN construction combining orbital affine layers with Reynolds blocks, which enforces equivariance for arbitrary finite stabilizer representations rather than only permutation actions (Definitions 2.7-2.10, p. 4).",
+            "Pair-orbit aggregation and an architecture hierarchy that contains ordinary relation message passing, higher-order source-labeled local networks, and full OENNs as increasingly expressive classes (Propositions 2.13-2.16, p. 5).",
+            "A full universal approximation theorem for continuous order-equivariant maps on compact invariant domains (Theorem 3.3, p. 6).",
+            "A diameter-sharp local universality theorem: dependencies beyond L hops cannot be approximated with L inter-site layers, while pair-state propagation on a strongly connected communication relation realizes broadcast in diameter depth and restores universality (Theorem 3.5 and Corollary 3.6, pp. 6-7).",
+            "Explicit recovery of fixed-graph message passing and automorphism-orbit convolution, plus equivariant sheaf layers built from restriction maps and adjoints (Section 4, pp. 7-9)."
+          ],
+          "method": "For a block-kernel linear map (Lx)_q=sum_p K(q,p)x_p, equivariance is converted into an algebraic compatibility relation between K(gamma q,gamma p) and the input/output transports. Choosing one representative of each diagonal G-orbit in P x P reduces all free parameters to intertwiners under the pair stabilizer; transport then reconstructs every other block (Propositions 2.3-2.4, p. 3). Nonlinearity is handled with finite-group Reynolds averaging: an ordinary MLP is evaluated on group-transformed inputs, its outputs are transported back, and the results are averaged. This yields an equivariant block and can be realized with branch-permutation layers (Definition 2.7 and Lemma 2.8, p. 4). Pair-orbit aggregation encodes each relative source type with an invariant Reynolds block, sums within the orbit, and applies a stabilizer-equivariant readout at the target (Equations (10)-(13), p. 5). The full UAT broadcasts the entire input into a target-site fiber and invokes finite-group equivariant density via Reynolds symmetrization (Lemmas 3.1-3.2 and Theorem 3.3, p. 6). For locality, the lower bound follows from receptive-field dependence. The constructive upper bound keeps a slot for every source p at every carrier q and propagates slots without mixing source labels. After directed-diameter many layers, each site has the full source-indexed input and can apply the full-OENN readout; this proves Theorem 3.5 (pp. 6-7). Sheaf naturality guarantees that transported restriction maps and their adjoints obey the same transporter law, producing equivariant upward/downward incidence layers (Section 4.2, pp. 8-9).",
+          "key_equations": [
+            {
+              "label": "Equation (4) / Proposition 2.3",
+              "latex": "K(\\gamma q,\\gamma p)T^V_{\\gamma,p}=T^W_{\\gamma,q}K(q,p)",
+              "symbol_definitions": [
+                "K(q,p) is the block mapping source fiber V_p to target fiber W_q.",
+                "gamma is an element of the finite symmetry group G.",
+                "T^V and T^W transport input and output fiber coordinates under gamma."
+              ],
+              "interpretation": "A kernel block at a transformed target-source pair is not merely copied; it is conjugated by the feature transports. This is the exact parameter-sharing law for fiber-valued equivariance.",
+              "role": "Necessary and sufficient characterization of linear order-equivariant layers.",
+              "assumptions": [
+                "G acts on P by order automorphisms.",
+                "Input and output fibers form G-equivariant bundles.",
+                "L is linear with the block-kernel form of Equation (3)."
+              ],
+              "derivation_outline": "Expand L rho_X(gamma)x and rho_Y(gamma)Lx in block form, reindex source sites, and equate coefficients for every input fiber.",
+              "locator": "Proposition 2.3 and Equation (4), Section 2.2, p. 3",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Equation (7) / Reynolds block",
+              "latex": "\\operatorname{Req}_H[\\Psi](u)=\\frac{1}{|H|}\\sum_{h\\in H}(T_h^V)^{-1}\\Psi(T_h^Uu)",
+              "symbol_definitions": [
+                "H is a finite stabilizer group.",
+                "T^U and T^V are its input/output representations.",
+                "Psi is an ordinary MLP.",
+                "Req_H[Psi] is the symmetrized equivariant block."
+              ],
+              "interpretation": "A generic nonlinear approximator is made exactly equivariant by averaging all transformed predictions after transporting them back to a common output frame.",
+              "role": "Mechanism that permits nonlinear OENN layers with nontrivial stabilizer actions on fibers.",
+              "assumptions": [
+                "H is finite.",
+                "Representations are linear and finite dimensional."
+              ],
+              "derivation_outline": "Equivariance follows by substituting T_g^Uu, changing summation variable h to hg, and using the representation laws.",
+              "locator": "Definition 2.7 and Equation (7), Section 2.3, p. 4",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.98,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Theorem 3.3",
+              "latex": "\\overline{\\operatorname{OENN}^{\\mathrm{full}}_\\sigma(X,Y)}=C_G(K,Y)",
+              "symbol_definitions": [
+                "K is a compact G-invariant subset of X.",
+                "C_G(K,Y) is the space of continuous order-equivariant maps.",
+                "sigma is a continuous non-polynomial activation.",
+                "The overline denotes closure in the uniform norm."
+              ],
+              "interpretation": "With unrestricted orbital affine mixing and Reynolds nonlinearities, OENNs can approximate every continuous equivariant target on a fixed finite structured domain.",
+              "role": "Principal full-architecture universal approximation theorem.",
+              "assumptions": [
+                "P and G are finite.",
+                "All fibers are finite dimensional.",
+                "K is compact and invariant.",
+                "sigma is continuous and non-polynomial."
+              ],
+              "derivation_outline": "A global equivariant broadcast makes the full input available at each site; sitewise stabilizer-equivariant targets are approximated by Reynolds-symmetrized MLPs and transported across site orbits.",
+              "locator": "Theorem 3.3, Section 3.2, p. 6",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.96,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Theorem 3.5",
+              "latex": "D=\\max_{p,q\\in P}d_R(p,q)",
+              "symbol_definitions": [
+                "d_R(p,q) is directed distance in the communication graph induced by relation R.",
+                "D is its directed diameter.",
+                "Hidden pair-state z_{q,p} stores source-p information at carrier q."
+              ],
+              "interpretation": "D is both the constructive depth needed to propagate every source to every target in the pair-state compilation and a worst-case lower threshold: with fewer than the required hops, some long-range coordinate dependency is unreachable.",
+              "role": "Depth quantity in the diameter-sharp local universality theorem.",
+              "assumptions": [
+                "R is G-invariant, contains self-loops, and its directed communication graph is strongly connected for the upper bound.",
+                "The architecture allows source-labeled pair-state memory."
+              ],
+              "derivation_outline": "Local receptive-field dependence gives the lower bound. For the upper bound, source slots are propagated along shortest paths without mixing labels until every target contains the full input, after which the full UAT applies.",
+              "locator": "Theorem 3.5, Section 3.3, pp. 6-7",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.95,
+              "interpretation_confidence": 0.99
+            }
+          ],
+          "experiments": "The main OENN development is theoretical and contains graph/sheaf illustrations rather than a dedicated original OENN benchmark. Appendix A reviews a Grothendieck category-equivariant human-activity-recognition experiment from Maruyama and Yasuda (2026), a related work: CatHAR has 1,080 length-96 tri-axial sequences from 18 subjects and five IMUs, with 12/3/3 subject train/validation/test splits. The reported Grothendieck Equivariant Net reaches mean accuracy and macro-F1 of 0.978 over five runs, compared with 0.633/0.582 for a patch Transformer and 0.493/0.467 for a convolutional LSTM (Table 2, p. 19). The appendix attributes the gain to explicit gauge-consistent cross-sensor relational features. Because these numbers summarize a separate cited framework/experiment and are not an ablation of the OENN architectures proved in Sections 2-4, they should not be treated as direct empirical validation of OENN universality or its pair-state design.",
+          "limitations": [
+            "The domain poset and group are finite and fixed. The theory does not address a coherent family across changing input sizes, graph limits, or stability/transfer of OENN parameters as P grows.",
+            "Full OENN layers may require one parameter block per target-source pair orbit; for trivial automorphism groups this can approach unrestricted pair-specific coupling (Section 4.1, p. 7).",
+            "Pair-state local universality stores a slot for every source at every carrier, so hidden width scales with the total input fiber dimension at each site and can be quadratic in domain size (Theorem 3.5, p. 6).",
+            "Universal approximation is qualitative. No approximation rates, sample-complexity bounds, optimization guarantees, or finite-width comparisons are supplied.",
+            "Ordinary message passing and local sheaf diffusion remain non-universal in general unless source-aware memory or global mixing is added; the universal construction may therefore be substantially more expensive than common practice (Section 5 conclusion and sheaf UAT discussion, pp. 9-10).",
+            "The paper assumes the poset, group action, transports, and restriction maps are known. It does not learn or infer structure and does not analyze misspecified symmetries.",
+            "The appendix's CatHAR numbers come from related work and do not directly validate the main OENN architecture."
+          ],
+          "reproducibility": "The mathematical construction is specified through definitions, propositions, theorem statements, and proofs in Appendix B. There is no main-text OENN implementation, code repository, training protocol, or benchmark suite explicitly provided. The CatHAR appendix gives dataset size, subject split, metrics, and aggregate results, but sends the full protocol and coarse-configuration evaluation to Maruyama and Yasuda (2026), so it is not self-contained enough for exact empirical reproduction from this paper alone. The report used arXiv v3 dated 5 August 2026 and reconstructed equations from the PDF; no TeX or linked code was executed.",
+          "research_ideas": [
+            "Define an any-dimensional OENN family over nested face posets and derive compatibility conditions on orbit/stabilizer parameters that yield a well-defined limit-space operator. This would connect OENN universality to size transferability.",
+            "Replace exact pair-state memory with low-rank, tensorized, or sketch-based source representations and characterize when local universality or controlled approximation survives with subquadratic width.",
+            "Develop quantitative approximation rates that depend on orbit counts, stabilizer representation dimensions, Hasse diameter, and target regularity, allowing principled comparison with ordinary MPNNs and higher-order GNNs.",
+            "Study approximate or learned symmetry: bound the error when transports or restriction maps are noisy, and design regularizers that learn the nearest transporter-consistent layer from data.",
+            "Combine categorical non-invertible transformations with graphon or manifold limits, seeking a notion of equivariance to refinement/coarsening maps that directly encodes transfer across resolutions."
+          ],
+          "warnings": [
+            "The paper's phrase 'categorical general form' is an author claim tied to the CENN appendix; this report does not treat it as an independently established maximality result beyond the stated formalism.",
+            "Appendix CatHAR results are evidence from cited related work, not a new controlled test of the OENN layers introduced in the main paper.",
+            "Theorem 3.5's diameter expression is included as the key quantitative structural relation; the theorem is a universality/depth result rather than an error-rate theorem."
+          ]
+        }
+      },
+      {
+        "id": "2605.13278",
+        "title": "Proximal-Based Generative Modeling for Bayesian Inverse Problems",
+        "authors": [
+          "Boyang Zhang",
+          "Zhiguo Wang",
+          "Ya-Feng Liu"
+        ],
+        "primaryCategory": "math.OC",
+        "publishedAt": "2026-05-13T09:55:51.000Z",
+        "updatedAt": "2026-05-27T13:51:45.000Z",
+        "score": 85,
+        "breakdown": {
+          "semantic": 82,
+          "topic": 80,
+          "method": 92,
+          "style": 94,
+          "recency": 98
+        },
+        "rationale": "A strong secondary-cluster match that unifies learned proximal operators, Moreau score matching, diffusion sampling, inverse problems, and a non-asymptotic Wasserstein guarantee.",
+        "tags": [
+          "Learned proximal operators",
+          "Diffusion models",
+          "Bayesian inverse problems",
+          "Moreau envelope",
+          "Posterior sampling",
+          "Wasserstein convergence"
+        ],
+        "mathDensity": "High",
+        "reportStatus": "Ready",
+        "abstractUrl": "https://arxiv.org/abs/2605.13278",
+        "pdfUrl": "https://arxiv.org/pdf/2605.13278",
+        "htmlUrl": "https://arxiv.org/html/2605.13278",
+        "sourceUrl": "https://arxiv.org/src/2605.13278",
+        "firstRecommendedAt": "2026-08-11T03:22:49.769Z",
+        "runId": "scan-2026-08-11T03-22-49-769Z",
+        "report": {
+          "report_level": "full",
+          "executive_summary": "This paper introduces Proximal-Based Generative Modeling (PGM) for Bayesian inverse problems, linking diffusion noising to Moreau-Yosida regularization and replacing the intractable time-dependent posterior score with a proximal-operator-based Moreau score. The posterior target has potential U(x)=beta f_y(x)+g(x), where f_y is a known data-fidelity term and g is an implicit prior (Equation (1), p. 1). For a variance-exploding diffusion, the marginal density is a Gaussian convolution of the target, whereas the Moreau approximation replaces integration by a supremum. These constructions coincide up to normalization for positive-semidefinite quadratic potentials (Lemma 3.1, p. 4), motivating the score substitution. The proposed Moreau score has the closed form (Prox_U^{lambda(t)}(x_t)-x_t)/lambda(t), and its proximal objective avoids direct evaluation of the time-dependent likelihood score (Equations (17)-(19), pp. 4-5). Because the prior proximal map is unknown, the authors train a neural proximal operator from clean prior samples using a sharply concentrated Bayes-risk objective called Moreau score matching (Proposition 3.4, pp. 5-6). A proximal splitting combines this learned prior operator with the known fidelity gradient, and a generalized reverse SDE plus exponential-interpolation discretization yields the PGM sampler (Equations (25)-(29) and Algorithm 1, p. 6). Under convexity, compact-domain, diffusion-schedule, and step-size assumptions, a Wasserstein-1 bound decomposes error into finite terminal time, score/splitting approximation, and numerical discretization terms. Unlike many nonsmooth diffusion analyses, the Moreau score remains well-defined near time zero, removing the paper's early-stopping error term (Theorem 4.3, p. 7). Experiments include a constrained quadratic toy problem and image restoration on FFHQ, CelebA-HQ, LSUN-Bedroom, MNIST, and ImageNet-100. In the main tables, PGM reports the best PSNR/SSIM/LPIPS across three FFHQ and CelebA-HQ restoration tasks, 4-second sampling versus 36 seconds for DPS on the stated FFHQ setup, and lower memory than several baselines (Tables 3-5, pp. 8-9). The authors provide code. Important caveats are that the theorem is primarily convex while image priors are nonconvex, the learned proximal network requires careful tuning, and unusually high SSIM values merit independent reproduction (Appendix A.3-B.1, pp. 18-19).",
+          "why_it_fits": "This paper matches the profile's secondary but repeated interest in learned proximal operators, diffusion models, inverse problems, and convergence guarantees. It is particularly close to the profile seeds on proximal matching and proximal diffusion, yet extends the idea into Bayesian posterior sampling where the likelihood contribution is difficult to evolve through diffusion time. The paper offers a clear mathematical bridge between nonsmooth optimization and generative modeling: Gaussian convolution, Moreau envelopes, proximal maps, reverse SDEs, Wasserstein convergence, and proximal splitting all appear in one construction. It also preserves the theory-guided empirical style favored by the profile. Relative to the dominant any-dimensional cluster, this recommendation adds genuine methodological diversity while remaining tightly connected to an established secondary signal. It may also suggest cross-cluster work: a learned proximal operator defined on variable-size sets or graphs would need invariant/equivariant parameterization and size-transfer guarantees, combining both halves of the profile.",
+          "problem_formulation": "The inverse problem observes y=A(x)+xi and seeks samples from the posterior pi(x) proportional to exp(-U(x)), with U(x)=beta f_y(x)+g(x). Here f_y is the negative log likelihood/data fidelity and g is a potentially nonsmooth prior known only through clean samples (Equations (1) and (6), pp. 1 and 3). Standard zero-shot diffusion posterior sampling decomposes the time-dependent conditional score into a learned prior score and a generally intractable likelihood score. Existing approximations may be biased, expensive, or lack convergence guarantees (Equation (2) and Section 2.2, pp. 2-3). The paper asks whether a different, tractable vector field can replace the exact time-dependent score while still producing the desired posterior. It constructs a Moreau-regularized surrogate whose score can be expressed using Prox_U, learns the unavailable Prox_g from prior samples, uses proximal splitting to incorporate f_y, and simulates a reverse process. The theoretical task is to bound Wasserstein distance between the generated law and pi under finite terminal time T, learned/splitting error M, and time discretization delta.",
+          "contributions": [
+            "A theoretical connection between Gaussian convolution in diffusion and Moreau-Yosida regularization, exact for positive-semidefinite quadratic potentials and controlled more generally through a score-discrepancy proposition (Lemma 3.1 and Proposition 3.2, pp. 4-5).",
+            "A closed-form Moreau score expressed via the proximal operator of the posterior potential, avoiding the time-dependent likelihood term that obstructs conventional zero-shot diffusion inversion (Equations (17)-(19), pp. 4-5).",
+            "Moreau score matching: an unsupervised Bayes-risk objective that learns the prior proximal operator from clean prior samples without posterior pairs (Proposition 3.4 and Equation (23), pp. 5-6).",
+            "A generalized proximal diffusion sampler for common forward schedules, with an explicit discretization and reusable learned proximal network (Equations (25)-(29) and Algorithm 1, p. 6).",
+            "A non-asymptotic Wasserstein-1 error bound that separates terminal-time, Moreau/splitting, and numerical errors and avoids the usual early-stopping term near t=0 (Proposition 4.2 and Theorem 4.3, p. 7).",
+            "Empirical evaluation on constrained sampling and multiple image-restoration tasks, with reported improvements in reconstruction metrics, memory, and sampling time (Section 5 and Appendix B, pp. 8-9 and 19 onward)."
+          ],
+          "method": "For the variance-exploding process x_t=x_0+sqrt(lambda(t))xi, the exact marginal pi_t is a Gaussian convolution. The Moreau surrogate pi_t^lambda uses the same quadratic kernel but a supremum over x_0; its log gradient is determined by the optimizer of U(x_0)+||x_0-x_t||^2/(2 lambda), namely Prox_U^lambda (Section 3.1, pp. 4-5). Proposition 3.2 compares exact and Moreau scores: they coincide for symmetric unimodal conditional posteriors and otherwise admit dimension-, curvature-, beta-, and lambda-dependent bounds under convexity. To avoid solving Prox_U from scratch, the method applies a proximal-gradient splitting Prox_U^lambda(x_t) approximately equal to Prox_g^lambda(x_t-beta lambda grad f_y(x_t)). The unknown Prox_g is identified with a MAP estimator of clean x_0 under Gaussian corruption and learned by minimizing a concentrated-loss Bayes risk over clean prior samples and noise levels (Equations (20)-(23), p. 5). The learned network is inserted into a generalized Moreau score for a linear forward SDE with schedules mu(t), sigma(t), and lambda(t)=sigma^2/mu^2. An exponential-interpolation scheme yields coefficients alpha_{1,k}, alpha_{2,k}, alpha_{3,k} and update x_{k+1}=alpha_1 x_k+alpha_2 P_k+alpha_3 xi_k (Equations (27)-(29), p. 6). The convergence proof bounds error between exact and approximate vector fields, then propagates terminal initialization, drift, and discretization errors in Wasserstein-1. Experiments use a U-Net proximal network, AdamW, a specified lambda schedule, beta=10, and K=100 by default (Appendix B.1, p. 19).",
+          "key_equations": [
+            {
+              "label": "Equations (8)-(10)",
+              "latex": "\\operatorname{Prox}_g^\\lambda(x)=\\arg\\min_u\\left\\{g(u)+\\frac{1}{2\\lambda}\\|u-x\\|^2\\right\\},\\qquad \\nabla g_\\lambda(x)=\\lambda^{-1}\\left(x-\\operatorname{Prox}_g^\\lambda(x)\\right)",
+              "symbol_definitions": [
+                "g is a proper closed convex prior potential.",
+                "lambda>0 is the Moreau/proximal parameter.",
+                "g_lambda is the Moreau envelope.",
+                "Prox_g^lambda is the proximal map."
+              ],
+              "interpretation": "Nonsmooth g is replaced by a differentiable envelope whose gradient is computable from the proximal point. This identity is the optimization-to-score bridge used throughout PGM.",
+              "role": "Foundational proximal identity for defining the Moreau score.",
+              "assumptions": [
+                "g is proper, closed, and convex for the stated classical identity and uniqueness behavior."
+              ],
+              "derivation_outline": "",
+              "locator": "Equations (8)-(10), Section 2.3, p. 4",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Equations (17)-(18)",
+              "latex": "\\nabla\\log \\pi_t^\\lambda(x_t)=\\frac{\\operatorname{Prox}^{\\lambda(t)}_U(x_t)-x_t}{\\lambda(t)},\\quad \\operatorname{Prox}^{\\lambda(t)}_U(x_t)=\\arg\\min_{x_0}\\left\\{\\beta f_y(x_0)+g(x_0)+\\frac{\\|x_0-x_t\\|^2}{2\\lambda(t)}\\right\\}",
+              "symbol_definitions": [
+                "pi_t^lambda is the Moreau surrogate of the time-dependent posterior.",
+                "U=beta f_y+g is the posterior potential.",
+                "x_t is the noised state.",
+                "beta is inverse temperature/data-fidelity weight."
+              ],
+              "interpretation": "The replacement score is explicit once a posterior proximal map is available. Its objective uses the static likelihood and prior at x_0, avoiding direct evaluation of the time-dependent likelihood score at x_t.",
+              "role": "Core definition enabling proximal diffusion sampling.",
+              "assumptions": [
+                "The proximal minimizer exists.",
+                "The displayed VE-SDE form uses lambda(t) as the noise variance."
+              ],
+              "derivation_outline": "Apply the Moreau-envelope gradient identity to the negative log of the supremal convolution defining pi_t^lambda.",
+              "locator": "Equations (17)-(18), Section 3.1, pp. 4-5",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Equation (23) / Proposition 3.4",
+              "latex": "\\theta^*=\\arg\\min_\\theta\\lim_{\\zeta\\to0}\\mathbb{E}\\left[\\operatorname{dist}_\\zeta(\\phi_\\theta(x_t,\\lambda(t)),x_0)\\right],\\qquad \\phi_{\\theta^*}(x_t,\\lambda(t))=\\operatorname{Prox}^{\\lambda(t)}_g(x_t)",
+              "symbol_definitions": [
+                "phi_theta is the learned proximal network.",
+                "dist_zeta(x,x')=1-N(x-x';0,zeta^2 I) is the concentrated Bayes loss.",
+                "x_0 is drawn from the prior and x_t is its Gaussian corruption."
+              ],
+              "interpretation": "As the loss concentrates, the Bayes-risk minimizer is the MAP estimator of x_0 given x_t, which equals the proximal operator of the prior potential.",
+              "role": "Training principle for learning Prox_g without paired inverse-problem posteriors.",
+              "assumptions": [
+                "Assumption 3.3: f_y is proper, closed, smooth and convex/strongly convex as stated; g is convex with compact domain.",
+                "The network class and optimization attain the population minimizer; approximation and finite-data effects are not explicit in the proposition."
+              ],
+              "derivation_outline": "Identify Prox_g with the conditional MAP under Gaussian corruption, then use the limiting concentrated loss whose Bayes estimator selects the conditional mode.",
+              "locator": "Proposition 3.4 and Equation (23), Section 3.2, pp. 5-6",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.97,
+              "interpretation_confidence": 0.98
+            },
+            {
+              "label": "Theorem 4.3",
+              "latex": "W_1(\\operatorname{Law}(\\bar x_K),\\pi)\\le D_1 e^{-m_\\mu T}+D_2 M+D_3\\delta^{1/2}",
+              "symbol_definitions": [
+                "bar x_K is the final PGM iterate.",
+                "pi is the target posterior.",
+                "T is terminal diffusion time.",
+                "M bounds score/splitting approximation error from Proposition 4.2.",
+                "delta is the maximum time step.",
+                "D_1,D_2,D_3 are bounded constants specified in the theorem."
+              ],
+              "interpretation": "Generated samples converge to the target as terminal time grows, the learned/splitting score error vanishes, and the discretization is refined. The three contributions are explicitly separated.",
+              "role": "Main non-asymptotic convergence guarantee.",
+              "assumptions": [
+                "Assumptions 3.3 and 4.1 hold, including convexity/compactness and bounded schedule/stepsize conditions.",
+                "T is sufficiently large.",
+                "The theorem's constants are finite under the stated schedule bounds."
+              ],
+              "derivation_outline": "The proof bounds terminal initialization error, continuous reverse-process perturbation from the approximate Moreau score, and numerical discretization error, then combines them in Wasserstein-1.",
+              "locator": "Theorem 4.3, Section 4, p. 7",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            }
+          ],
+          "experiments": "The constrained quadratic experiment samples from a truncated Gaussian/ball-constrained Gibbs distribution. Figure 3 reports that PGM attains a 98.45% inside-ratio with a distribution peak near -0.02 in the one-dimensional visualization; Table 1 shows feasibility rising from 0% at K=0 to 99.61% at K=10 and 99.73% at K=20 for beta=10 (p. 8). For image restoration, the paper evaluates 4x super-resolution, 70% random inpainting, Gaussian deblurring, and nonlinear deblurring. On the stated FFHQ setup, Table 3 reports 4,682 MB total memory and 4 seconds sampling for PGM versus 5,369 MB and 36 seconds for DPS, with other baselines slower and/or more memory intensive (pp. 8-9). Table 4 reports PGM as best across PSNR, SSIM, and LPIPS for all three listed FFHQ tasks; for example Gaussian deblurring is 30.67 PSNR, 0.959 SSIM, and 0.148 LPIPS. Table 5 reports the same pattern on CelebA-HQ, including 31.52/0.957/0.129 for Gaussian deblurring (p. 9). LSUN-Bedroom results are shown qualitatively in Figure 4. Appendix B adds MNIST, ImageNet-100, nonlinear-deblurring settings, training/sampling cost, fixed metrics, and detailed configuration (pp. 19 onward). The comparisons are author-reported and should be independently reproduced, especially the very high SSIM values and runtime claims.",
+          "limitations": [
+            "The convergence theory primarily assumes convex potentials and compact prior domain, whereas learned image priors and neural proximal networks are generally nonconvex. The paper explicitly calls the theory insufficient in nonconvex settings (Section 4 and Appendix A.3, pp. 7 and 18).",
+            "Learning a proximal operator requires careful hyperparameter tuning, and the chosen network architecture is not guaranteed to satisfy structural properties expected of exact proximal maps (Appendix A.3, p. 18).",
+            "The Moreau score contains both proximal-splitting error and learned-operator error; Theorem 4.3 compresses these into M rather than deriving an end-to-end finite-sample training bound for M (Proposition 4.2 and Theorem 4.3, p. 7).",
+            "The concentrated-loss limit zeta->0 and attainment of the population Bayes minimizer may be difficult numerically; practical approximation effects require empirical control beyond Proposition 3.4.",
+            "The image comparisons are extensive but rely on implementation choices, similar rather than identical backbones, and author-reported timing/hardware; the strongest metrics require independent validation.",
+            "Explicit general-dimension convergence rates and dependence beyond the displayed constants remain an open direction identified by the authors (Appendix A.4, p. 19)."
+          ],
+          "reproducibility": "The authors state that code is available at https://github.com/boyangzhang2000/PGM (Section 5 and Appendix B.1, pp. 8 and 19). Appendix B.1 specifies a U-Net with 128 hidden channels, 128-dimensional time embeddings, four encoder and four decoder blocks; AdamW with learning rate 1e-4, weight decay 1e-5, batch size 8, and warm-up cosine scheduling; lambda(t)=exp(10t-8), zeta(t)=10/t, beta=10, and K=100. It lists task degradations, datasets, metrics, and common baseline backbone choices (p. 19 onward). These details and public code make reproduction substantially more feasible than for the theory-only selections, though exact checkpoints, data preprocessing, hardware, seed control, and baseline tuning should be verified in the repository. The report used arXiv v2 dated 27 May 2026 and PDF reconstruction; downloaded source or repository code was not executed.",
+          "research_ideas": [
+            "Parameterize phi_theta as a provably proximal or firmly nonexpansive operator, for example through monotone/gradient architectures, and propagate the structural guarantee into a sharper bound on M.",
+            "Extend Moreau score matching and convergence to nonconvex weakly-convex priors, explicitly quantifying mode-selection and multivalued-proximal effects instead of treating the image regime as an empirical extrapolation.",
+            "Develop invariant/equivariant learned proximal operators for sets, graphs, and particle systems, then analyze whether the operator transfers across input sizes using the profile's any-dimensional limit-space framework.",
+            "Replace the limiting concentrated Bayes loss with a numerically stable family and derive finite-zeta, finite-sample, and function-approximation error bounds that feed directly into Theorem 4.3's M term.",
+            "Investigate adaptive schedules that balance Moreau bias, proximal-splitting error, and numerical stiffness, choosing lambda(t) and step sizes from observable residuals rather than fixed exponential schedules."
+          ],
+          "warnings": [
+            "Equation (7) in the paper's background appears as an integral expression for the time-dependent likelihood term; this report does not rely on its exact rendered form because the central method avoids that evaluation.",
+            "The theorem's convex assumptions do not cover the full neural-image experiment regime.",
+            "Runtime, memory, and unusually high SSIM results are author-reported and hardware/implementation dependent."
+          ]
+        }
+      }
+    ]
   },
   "activity": [
+    {
+      "id": "beb5afc7-bf3c-4fbe-8832-564aedc3fde7",
+      "at": "2026-08-11T03:22:49.774Z",
+      "type": "scan",
+      "title": "arXiv scan selected 5 papers",
+      "detail": "11 candidates reviewed with profile v3."
+    },
     {
       "id": "c49e1a85-dc26-47f2-84f7-ddbee577f4ac",
       "at": "2026-08-11T03:00:55.276Z",
