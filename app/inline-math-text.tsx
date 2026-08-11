@@ -17,9 +17,13 @@ function InlineFormula({ latex }: { latex: string }) {
 }
 
 export default function InlineMathText({ children }: { children: string }) {
-  return parseInlineMath(children).map((segment, index) =>
-    segment.kind === "math"
-      ? <InlineFormula key={`${index}-${segment.value}`} latex={segment.value} />
-      : <span key={`${index}-${segment.value}`}>{segment.value}</span>,
+  return (
+    <span className="inline-math-text">
+      {parseInlineMath(children).map((segment, index) =>
+        segment.kind === "math"
+          ? <InlineFormula key={`${index}-${segment.value}`} latex={segment.value} />
+          : segment.value,
+      )}
+    </span>
   );
 }
