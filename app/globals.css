@@ -252,6 +252,8 @@ button { color: inherit; }
 .report-section-heading h2 { font-family: Georgia, serif; font-weight: 500; font-size: 25px; letter-spacing: -.02em; margin: 0; }
 .report-section > p, .report-section > ul { color: #454d5e; font-family: Georgia, serif; font-size: 15px; line-height: 1.75; }
 .report-section .lead-copy { font-size: 19px; line-height: 1.62; color: #282e3c; }
+.inline-math { display: inline-block; white-space: nowrap; margin: 0 .04em; }
+.inline-math .katex { font-size: 1em; }
 .report-section ul { padding-left: 20px; }
 .report-section li { margin-bottom: 10px; }
 .report-section h4 { margin: 28px 0 8px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }

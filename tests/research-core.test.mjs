@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { isWithinTwoYears, normalizeArxivId } from "../lib/arxiv.ts";
+import { parseInlineMath } from "../lib/inline-math.ts";
 import { fitScore, mmr } from "../lib/ranking.ts";
 
 test("normalizes modern, versioned, URL, and legacy arXiv IDs", () => {
@@ -30,4 +31,13 @@ test("MMR avoids selecting only identical candidates", () => {
     { id: "c", score: 88, vector: [0, 1] },
   ], 2, 0.6);
   assert.deepEqual(selected.map((item) => item.id), ["a", "c"]);
+});
+
+test("detects explicit and legacy inline formulas in report prose", () => {
+  const segments = parseInlineMath("The rate is nearly O(n^{-min(1-b/2,alpha_2)}), while $D_\\chi$ controls L^infinity geometry.");
+  assert.deepEqual(segments.filter((segment) => segment.kind === "math").map((segment) => segment.value), [
+    "\\mathcal{O}\\!\\left(n^{-\\min(1-b/2,\\alpha_2)}\\right)",
+    "D_\\chi",
+    "L^\\infty",
+  ]);
 });
