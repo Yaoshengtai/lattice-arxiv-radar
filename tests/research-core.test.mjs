@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { isWithinTwoYears, normalizeArxivId } from "../lib/arxiv.ts";
-import { parseInlineMath } from "../lib/inline-math.ts";
+import { annotateSymbolDefinitionMath, parseInlineMath } from "../lib/inline-math.ts";
 import { fitScore, mmr } from "../lib/ranking.ts";
 
 test("normalizes modern, versioned, URL, and legacy arXiv IDs", () => {
@@ -40,4 +40,9 @@ test("detects explicit and legacy inline formulas in report prose", () => {
     "D_\\chi",
     "L^\\infty",
   ]);
+});
+
+test("marks standalone symbols and functions in symbol definitions", () => {
+  assert.equal(annotateSymbolDefinitionMath("u is the coordinate and X(.,t) is the feature in I=[0,1]."), "$u$ is the coordinate and $X(\\cdot,t)$ is the feature in I=[0,1].");
+  assert.equal(annotateSymbolDefinitionMath("mathcal H uses Phi, rho, and tilde C."), "$\\mathcal{H}$ uses $\\Phi$, $\\rho$, and $\\widetilde{C}$.");
 });
