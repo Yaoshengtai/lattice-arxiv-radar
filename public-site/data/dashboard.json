@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-11T03:23:41.093Z",
+  "generatedAt": "2026-08-12T08:17:31.829Z",
   "profile": {
     "currentVersion": 3,
     "versions": [
@@ -354,6 +354,24 @@
           "Six active profile seeds were treated as known papers and excluded from recommendation.",
           "The viable pool was assembled from profile-focused arXiv searches within the two-year window; five high-scoring papers were selected to preserve method diversity.",
           "All selected reports are full reports reconstructed from arXiv PDFs; no downloaded paper source or code was executed."
+        ]
+      },
+      {
+        "id": "scan-2026-08-12T08-16-34-035Z",
+        "createdAt": "2026-08-12T08:16:34.035Z",
+        "profileVersion": 3,
+        "candidateCount": 10,
+        "selectedIds": [
+          "2602.15239",
+          "2510.15814",
+          "2607.26699",
+          "2601.09831",
+          "2408.08823"
+        ],
+        "warnings": [
+          "Eleven known arXiv IDs were excluded: six active-profile seeds and five papers already in the library.",
+          "The search window began on 2024-08-12; paper 2408.08823 is close to the lower recency boundary.",
+          "The random-feature GNN result concerns fixed-size graphs and should not be read as a size-transfer theorem."
         ]
       }
     ],
@@ -1144,10 +1162,686 @@
             "Runtime, memory, and unusually high SSIM results are author-reported and hardware/implementation dependent."
           ]
         }
+      },
+      {
+        "id": "2602.15239",
+        "title": "Size Transferability of Graph Transformers with Convolutional Positional Encodings",
+        "authors": [
+          "Javier Porras-Valenzuela",
+          "Zhiyang Wang",
+          "Xiaotao Shang",
+          "Yusu Wang",
+          "Alejandro Ribeiro"
+        ],
+        "primaryCategory": "cs.LG",
+        "publishedAt": "2026-02-16T00:00:00.000Z",
+        "updatedAt": "2026-05-28T00:00:00.000Z",
+        "score": 98,
+        "breakdown": {
+          "semantic": 98,
+          "topic": 99,
+          "method": 96,
+          "style": 95,
+          "recency": 97
+        },
+        "rationale": "The closest new match to the profile: a manifold-limit definition of graph-Transformer transferability, an explicit finite-size bound, and large-graph experiments centered on training at one resolution and testing at another.",
+        "tags": [
+          "size transferability",
+          "graph transformers",
+          "manifold limits",
+          "positional encodings",
+          "operator convergence"
+        ],
+        "mathDensity": "High",
+        "reportStatus": "Ready",
+        "abstractUrl": "https://arxiv.org/abs/2602.15239",
+        "pdfUrl": "https://arxiv.org/pdf/2602.15239",
+        "htmlUrl": "https://arxiv.org/html/2602.15239",
+        "sourceUrl": "https://arxiv.org/src/2602.15239",
+        "firstRecommendedAt": "2026-08-12T08:16:34.035Z",
+        "runId": "scan-2026-08-12T08-16-34-035Z",
+        "report": {
+          "report_level": "full",
+          "executive_summary": "This paper asks whether a graph Transformer trained on a small graph can be deployed on a larger graph sampled from the same underlying geometric object. Its answer is conditional but unusually direct: graph Transformers inherit size transferability from positional encodings when the discrete graph operators converge to a common manifold operator and the attention projections are bounded. The authors formulate a continuum manifold Transformer whose softmax attention is an integral, connect graph and manifold computations with sampling and interpolation operators, and prove pointwise convergence of the finite graph Transformer to the continuum model. The main bound separates positional-encoding error from sampling error and contains the geometric rate O((log N/N)^{1/d}), where d is intrinsic manifold dimension (Theorem 1, Eq. (10), pp. 6-7). A triangle argument then compares models evaluated on two differently sized graphs from the same manifold (Corollary 2, Eq. (11), p. 7). The construction uses RPEARL, a GNN-based positional encoding with random features, and proposes neighborhood-masked attention to avoid quadratic dense attention. Experiments subsample ArXiv-Year, OGBN-MAG, SNAP-Patents, and REDDIT-BINARY, train at multiple size fractions, and test on the full graph; the paper also studies shortest-path prediction on a Norwegian terrain manifold (Section 4, pp. 8-11). The theoretical scope is narrower than generic graph distribution shift: graphs must arise from the same manifold limit, signals must be normalized Lipschitz, attention projections bounded, and the positional encoding transferable. Within that scope, the paper provides a clean architecture-level principle: transfer is not delivered by attention alone; it is inherited through a stable operator-dependent structural encoding.",
+          "why_it_fits": "This is the strongest fit in the scan because it sits at the intersection of the profile's highest-weight topics: variable-size generalization, limit spaces, operator convergence, graph learning, and rigorous theory backed by targeted experiments. It is also complementary rather than duplicative with the already recommended general Transformer size-generalization paper. The earlier work treats geometric tokensets and graphons through uniform output and learning bounds; this paper specializes to graph Transformers sampled from manifolds, explicitly analyzes convolutional positional encodings, and derives a graph-to-manifold convergence statement for the proposed architecture. The distinction is useful for building a broader theory of any-dimensional learning: one paper controls a hypothesis class over continuous tokensets, while this one exposes how graph Laplacian convergence and positional-encoding error enter a concrete graph-Transformer design. The result also makes a productive connection to the profile's interest in equivariance. The positional encoding is permutation equivariant, while transferability is formulated through consistency under sampling and interpolation; together these suggest studying architectures that respect both relabeling symmetry and discretization refinement. The large-scale experiments, including a 1.71-million-node graph, keep the paper from being purely formal, although the empirical metrics validate transfer behavior rather than prove the theoretical rate tightly.",
+          "problem_formulation": "Let M be a compact d-dimensional manifold with probability measure mu and Laplace operator L. Sampling N points independently from mu produces a graph G_N and graph Laplacian L_N. Bounded sampling and interpolation operators S_N and I_N connect functions on M with node signals, and consistency requires ||I_N S_N f-f||_{L2}->0 and ||I_N L_N S_N f-Lf||_{L2}->0 (Eqs. (5)-(6), p. 5). A graph positional encoding Psi_G(L_N,X) and its manifold analogue Psi_M(L,f) are called transferable when their interpolated outputs converge (Definition 1, Eq. (7), p. 5). The finite graph Transformer applies softmax attention to the encoded node features; its continuum counterpart replaces the finite normalized sum by an integral over M (Definition 2, Eqs. (8)-(9), p. 6). The central task is to bound the output difference between these two computations and then between two finite graphs of different sizes. Inputs are normalized Lipschitz; Q, K, and V are bounded linear maps; and the positional encoding must already have a quantified pointwise error Delta_PE (Assumptions 1-3, p. 6). Thus the theorem concerns resolution change within one latent manifold model, not arbitrary graph-size extrapolation across unrelated distributions.",
+          "contributions": [
+            "A continuum manifold-Transformer limit for graph attention and an operator-based definition of size-transferable graph functions (Definitions 1-2, pp. 5-6).",
+            "A pointwise high-probability convergence bound that decomposes graph-Transformer error into positional-encoding error and geometric sampling error (Theorem 1, Eq. (10), p. 6).",
+            "A two-graph transferability corollary and a specialization showing that graph Transformers equipped with RPEARL positional encodings are size transferable under the stated model (Corollaries 2-3, pp. 7-8).",
+            "A sparse graph-Transformer design using neighborhood-masked attention and convolutional/GNN positional encodings, retaining the theoretical inheritance mechanism while improving scalability (Section 2 and Eq. (13), pp. 3 and 8).",
+            "Cross-size node and graph classification experiments plus a terrain shortest-path case study, including graphs up to 1.71 million nodes (Section 4 and Tables 1-4, pp. 8-11 and appendix)."
+          ],
+          "method": "The analysis first assumes graph Laplacians converge to a manifold Laplace operator through compatible sampling and interpolation. A transferable positional encoder converts the original signal into features whose finite and continuum versions differ by Delta_PE. The manifold attention operator integrates exp(<Qf(x),Kf(y)>)Vf(y) and normalizes by the corresponding integral. The proof of Theorem 1 compares the empirical attention numerator and denominator to these integrals, controls their concentration over manifold samples, and propagates the PE perturbation through bounded Q, K, and V. This yields a term linear in Delta_PE plus a sampling term proportional to (log N/N)^{1/d}; constants depend exponentially on the maximum attention logit M and polynomially on projection norms. Corollary 2 applies the triangle inequality through the shared manifold output to compare two graph sizes. For RPEARL, existing convergence of graph neural networks to manifold neural networks provides an explicit PE error, producing a specialized architecture bound. The practical model computes several graph convolutions on random node features, combines them into positional encodings, and adds those encodings to inputs before dense or neighborhood-masked attention. The empirical protocol trains on induced subsamples over a grid of fractions and tests on much larger/full graphs, treating stability of performance across that grid as evidence of transferability.",
+          "key_equations": [
+            {
+              "label": "Definition 1 / Eq. (7)",
+              "latex": "\\lim_{N\\to\\infty}\\|I_N\\Psi_G(L_N,S_Nf)-\\Psi_M(L,f)\\|_{L^2(\\mu)}=0",
+              "symbol_definitions": [
+                "L_N and L are discrete and manifold operators.",
+                "S_N samples a manifold signal and I_N interpolates graph outputs.",
+                "Psi_G and Psi_M are the same structural encoding realized on graph and manifold domains."
+              ],
+              "interpretation": "A structural encoder is transferable when refining the graph makes its interpolated output converge to one continuum representation.",
+              "role": "Foundational condition from which the Transformer inherits size transferability.",
+              "assumptions": [
+                "Permutation equivariance and uniform Lipschitz continuity of Psi.",
+                "Operator convergence and admissible input f."
+              ],
+              "derivation_outline": "This is a definition motivated by graph-Laplacian convergence, not a derived bound.",
+              "locator": "Definition 1, Section 3.2, p. 5",
+              "provenance": "Structured HTML",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Theorem 1 / Eq. (10)",
+              "latex": "\\|\\Phi_G(T,X)(x)-\\Phi_M(T,f)(x)\\|_2\\le [C_V+4e^{2M}C_{QKV}]\\Delta_{PE}+[e^M C_V+2e^{2M}C_{QKV}]A(\\log N/N)^{1/d}",
+              "symbol_definitions": [
+                "Phi_G and Phi_M are graph and manifold Transformer layers.",
+                "Delta_PE bounds pointwise positional-encoding error.",
+                "C_Q,C_K,C_V bound attention projections and C_QKV=C_Q C_K C_V.",
+                "M bounds the attention logit; A depends on manifold geometry; d is intrinsic dimension."
+              ],
+              "interpretation": "Finite attention converges to continuum attention if its positional encoding converges; the slower of PE convergence and geometric sampling controls transfer.",
+              "role": "Main graph-to-manifold convergence theorem.",
+              "assumptions": [
+                "Normalized Lipschitz signals.",
+                "Bounded Q, K, V.",
+                "Transferable positional encoding.",
+                "Probability at least 1-delta under manifold sampling."
+              ],
+              "derivation_outline": "Compare empirical and continuum attention numerators and denominators, bound sampling concentration, then propagate the positional perturbation through softmax attention.",
+              "locator": "Theorem 1, Section 3.3, Eq. (10), pp. 6-7",
+              "provenance": "Structured HTML",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.98
+            },
+            {
+              "label": "Corollary 2 / Eq. (11)",
+              "latex": "\\mu(M)^{-1}\\|I_{N_1}\\Phi_{G_1}(T,X_1)-I_{N_2}\\Phi_{G_2}(T,X_2)\\|_{L^{1,2}(M)}\\le\\Delta_\\Phi(X_1)+\\Delta_\\Phi(X_2)+4e^{2M}C_{QKV}A(\\log N/N)^{1/d}",
+              "symbol_definitions": [
+                "G_1 and G_2 are graphs with N_1 and N_2 samples from the same M.",
+                "Delta_Phi denotes their respective graph-to-manifold errors."
+              ],
+              "interpretation": "Two resolutions are close because both approximate the same manifold Transformer; the statement does not cover graphs with unrelated limits.",
+              "role": "Direct size-transfer statement used to justify train-small, deploy-large behavior.",
+              "assumptions": [
+                "Theorem 1 assumptions for both graphs.",
+                "Both graphs are sampled from the same manifold."
+              ],
+              "derivation_outline": "Apply the triangle inequality through the common manifold output and integrate the pointwise bound.",
+              "locator": "Corollary 2, Section 3.3, Eq. (11), p. 7",
+              "provenance": "Structured HTML",
+              "extraction_confidence": 0.96,
+              "interpretation_confidence": 0.98
+            }
+          ],
+          "experiments": "The main transfer protocol constructs training graphs at fractions alpha of each dataset and evaluates on a substantially larger/full test graph (Section 4.1, p. 8). Models include dense and sparse graph Transformers with RPEARL, GCN, Exphormer, and MLP baselines. ArXiv-Year has 76.5K nodes, OGBN-MAG about 855K, SNAP-Patents 1.71M, while REDDIT-BINARY averages roughly 430 nodes per graph (Figure 2 and Table 2, pp. 7 and appendix). Accuracy generally improves or stabilizes as training resolution increases, and the RPEARL Transformer behaves comparably to GNNs in settings where their full-size accuracy is comparable. ArXiv-Year heatmaps test many train/test size pairs rather than only one extrapolation point. A component ablation on SNAP-Patents reports that adding structural information is essential and compares neighborhood attention and RPEARL (Table 1, p. 11). The terrain experiment samples Norway at multiple resolutions and estimates shortest-path distances, demonstrating a continuous-domain application where sparse attention is computationally meaningful (Section 4.2, pp. 10-11). These experiments support the qualitative inheritance claim but do not directly fit the exponent or verify constants in Eq. (10). Dataset subsampling also approximates, rather than literally realizes, the independent manifold sampling assumed by theory.",
+          "limitations": [
+            "All compared graph sizes must share a manifold limit and compatible Laplace-operator convergence; arbitrary topology or distribution shifts are outside scope.",
+            "The bound is pointwise and its rate deteriorates with intrinsic dimension; constants grow with attention logits and projection norms (Theorem 1, p. 6).",
+            "Transferability is assumed for the positional encoding, so the main theorem is an inheritance result rather than a universal guarantee for common spectral or shortest-path encodings.",
+            "The normalized Lipschitz signal and bounded-operator assumptions may require explicit regularization that standard training does not enforce.",
+            "Empirical performance trends validate transfer behavior but do not isolate the predicted asymptotic rate or prove that subsampled benchmarks satisfy the manifold model."
+          ],
+          "reproducibility": "The paper specifies graph construction, the dense and sparse Transformer formulas, RPEARL/TAGConv components, size-fraction protocols, datasets, and extensive hyperparameter tables in the appendix. It reports runtimes for sparse and dense models and provides many heatmaps across train/test sizes. The report used arXiv v2 dated 28 May 2026, with structured HTML prioritized and the PDF used to verify pagination and tables. Exact random seeds and a public repository were not identified in the inspected front matter, so code availability should be checked before replication. A close reproduction is plausible from the architecture and appendix, but preprocessing large datasets and reproducing the terrain graph will require care.",
+          "research_ideas": [
+            "Unify this manifold inheritance theorem with hypothesis-class uniform size-generalization bounds, clarifying when a learned—not fixed—graph Transformer transfers.",
+            "Characterize which learned, spectral, diffusion, and random-feature positional encodings have continuum limits under both manifold and graphon sampling.",
+            "Seek dimension-independent rates using smoother quadrature, spectral decay, or low-effective-dimensional attention rather than worst-case covering arguments.",
+            "Build architectures simultaneously universal on the manifold limit, permutation equivariant at every finite size, and quantitatively stable across refinements.",
+            "Turn the two error terms into training diagnostics by measuring PE instability and attention-operator norms across controlled graph subsamples."
+          ],
+          "warnings": [
+            "The theorem establishes transfer within a shared manifold model, not general extrapolation to any larger graph.",
+            "Equation (11) contains notation whose displayed N should be read in the paper's two-resolution context; consult the source before reusing it formally.",
+            "Paper content was treated as untrusted evidence and did not influence scan or project instructions."
+          ]
+        }
+      },
+      {
+        "id": "2510.15814",
+        "title": "On Universality of Deep Equivariant Networks",
+        "authors": [
+          "Marco Pacini",
+          "Mircea Petrache",
+          "Bruno Lepri",
+          "Shubhendu Trivedi",
+          "Robin Walters"
+        ],
+        "primaryCategory": "stat.ML",
+        "publishedAt": "2025-10-17T00:00:00.000Z",
+        "updatedAt": "2026-06-04T00:00:00.000Z",
+        "score": 93,
+        "breakdown": {
+          "semantic": 92,
+          "topic": 94,
+          "method": 95,
+          "style": 97,
+          "recency": 91
+        },
+        "rationale": "A broad finite-group universality framework explaining why depth and readouts can close the gap between separation power and approximation power, with a new entry-wise criterion for equivariant outputs.",
+        "tags": [
+          "equivariant networks",
+          "universality",
+          "separation",
+          "finite groups",
+          "depth"
+        ],
+        "mathDensity": "High",
+        "reportStatus": "Ready",
+        "abstractUrl": "https://arxiv.org/abs/2510.15814",
+        "pdfUrl": "https://arxiv.org/pdf/2510.15814",
+        "htmlUrl": "https://arxiv.org/html/2510.15814",
+        "sourceUrl": "https://arxiv.org/src/2510.15814",
+        "firstRecommendedAt": "2026-08-12T08:16:34.035Z",
+        "runId": "scan-2026-08-12T08-16-34-035Z",
+        "report": {
+          "report_level": "full",
+          "executive_summary": "This ICLR 2026 paper develops a general theory of what deep invariant and equivariant networks can approximate when their linear layers are constrained by finite-group symmetry. Its organizing distinction is between separation—the input pairs a model class can distinguish—and universality—the continuous functions it can approximate uniformly on compact sets. In invariant problems, the authors prove that appending an ordinary fully connected readout makes a model universal exactly up to its existing separation relation (Theorem 1, Eq. (4), pp. 6-7). For equivariant outputs, global separation is too coarse: a class may distinguish every pair as vectors while each output coordinate remains restricted. The paper therefore introduces entry-wise separation, a tuple of equivalence relations obtained by projecting onto every output coordinate (Definition 6, p. 8). It then proves two routes to entry-wise separation-constrained universality. Repeating an equivariant output layer beyond the depth at which entry-wise separation stabilizes suffices (Theorem 2 and Corollary 1, p. 9), while a suitable width-one convolutional readout can achieve the same conclusion directly (Theorem 3, p. 9). The setting covers finite groups acting through permutation representations and non-polynomial pointwise activations; examples include invariant layers, cyclic convolutions, and PointNet/DeepSets-style layers. The work is theorem-only and does not provide approximation rates, width bounds, or experiments. Its value is conceptual: it identifies exactly why equivariant universality cannot be inferred from ordinary pair-separation and shows how depth or output design repairs that gap without requiring regular representations or high-order tensors.",
+          "why_it_fits": "The active profile emphasizes invariant/equivariant neural networks, universality, representation stability, and rigorous approximation theory. This paper addresses those themes with a reusable abstraction rather than one architecture-specific result. It is particularly relevant to any-dimensional work because separation relations often encode the finite combinatorial information retained by a model, while universality describes density inside the functions compatible with that retained information. The entry-wise refinement warns that vector-valued equivariant targets require more granular analysis than invariant scalar readouts. That distinction could matter whenever an any-dimensional model outputs one value per point, node, or coordinate: global distinguishability may overstate what each component can express. The paper also connects to graph learning through Weisfeiler-Leman separation and to classical PointNet/DeepSets universality, but it does not itself study changing input size. Consequently it should be read as an approximation-power component that can be paired with separate transfer or limit-space theorems, not as evidence of size generalization. Relative to other equivariant universality papers, its practical insight is architectural: sufficient depth or a carefully chosen readout can saturate the approximation class allowed by separation without introducing extremely large hidden representations.",
+          "problem_formulation": "A finite group G acts on finite sets, inducing permutation representations V_i. Each layer space M_i is a subspace of G-equivariant affine maps with permitted equivariant linear filters and orbitwise biases (Definition 1, Eq. (1), pp. 3-4). Networks compose such maps with a fixed non-polynomial pointwise activation; varying channel multiplicities plays the role of width (Definitions 2-4, pp. 4-5). The universality class U_sigma(M_1,...,M_d) is the closure, under uniform convergence on compact sets, of networks with all intermediate multiplicities. A model family U induces an equivalence relation rho(U): two inputs are equivalent when every function in U gives the same output (Definition 5, p. 5). In the invariant case the target class C_rho consists of continuous functions constant on these equivalence classes. For equivariant outputs R^X, coordinate projections pi_x reveal potentially different relations rho_x. The question is whether adding depth or output/readout layers makes the neural universality class equal to the largest continuous invariant/equivariant class compatible with these separation constraints.",
+          "contributions": [
+            "A finite-group layer-space and universality-class framework covering broad invariant and equivariant architectures (Definitions 1-4, pp. 3-5).",
+            "An invariant theorem showing that a fully connected readout guarantees universality up to the model's separation relation (Theorem 1, Eq. (4), pp. 6-7).",
+            "A counterexample demonstrating that ordinary vector-level separation does not characterize equivariant approximation power (Example 3, Eq. (7), p. 8).",
+            "The definition of entry-wise separation through all coordinate projections and the associated target function class (Definition 6, p. 8).",
+            "Two equivariant universality theorems: one based on stabilization with finite depth and one based on a suitable convolutional output layer (Theorems 2-3, p. 9)."
+          ],
+          "method": "The invariant proof constructs a countable family of network functions realizing the separation relation, parallelizes finitely many of them into a vector feature map, and uses a classical fully connected universal approximator on that finite-dimensional readout. A topological lemma shows that continuous functions respecting a closed equivalence relation can be approximated by continuous functions of finitely many separating coordinates. For equivariant functions, the authors project onto coordinate x. The projected scalar function is invariant under the stabilizer subgroup G_x, letting invariant arguments operate coordinatewise. Example 3 shows why intersecting these coordinate relations into one global relation loses information: width-one convolutional networks may include the identity and hence globally separate all inputs, yet each coordinate can still depend only on its corresponding input entry. Definition 6 retains the full tuple of relations. Theorem 2 then assumes entry-wise separation is unchanged by adding one more copy of an output layer M containing the identity; this stabilization lets the last layer supply enough coordinatewise combinations for universality. Prior finiteness results imply stabilization after some finite depth D. Theorem 3 instead uses a convolutional width-one output layer as an equivariant analogue of a fully connected invariant readout. Importantly, the closure is taken after unioning over channel multiplicities, so these results are not claims about one fixed-width network. They identify the function-class obstruction caused by layer structure while allowing width to grow. The authors also explain that adding layers can improve separation before stabilization, whereas the final convolutional readout in Theorem 3 preserves entry-wise separation and only repairs approximation. This distinguishes two effects of depth that are often conflated: acquiring new distinguishability and becoming dense within functions already compatible with that distinguishability (discussion following Theorem 3, p. 9).",
+          "key_equations": [
+            {
+              "label": "Theorem 1 / Eq. (4)",
+              "latex": "\\mathcal U_\\sigma(M_1,\\ldots,M_d,I,L)=C_\\rho(V),\\quad \\rho=\\rho(\\mathcal U_\\sigma(M_1,\\ldots,M_d,I))",
+              "symbol_definitions": [
+                "I is an invariant affine layer and L an unconstrained scalar fully connected layer.",
+                "rho is the indistinguishability relation induced before the final readout.",
+                "C_rho(V) contains continuous functions constant on rho classes."
+              ],
+              "interpretation": "A fully connected readout removes approximation restrictions beyond those already forced by invariant separation.",
+              "role": "Main invariant separation-constrained universality result.",
+              "assumptions": [
+                "Finite group permutation representations.",
+                "Layer spaces have the stated form.",
+                "Non-polynomial pointwise activation and compact-open approximation topology."
+              ],
+              "derivation_outline": "Parallelize a countable separating family, apply scalar universal approximation to finite coordinate maps, and use the equivalence-relation density lemma.",
+              "locator": "Theorem 1, Section 4, Eq. (4), pp. 6-7",
+              "provenance": "Structured HTML",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Definition 6",
+              "latex": "\\rho(\\mathcal N)=(\\rho_{x_1}(\\mathcal N),\\ldots,\\rho_{x_n}(\\mathcal N)),\\quad \\rho_x=\\{(a,b):\\pi_x f(a)=\\pi_x f(b)\\;\\forall f\\in\\mathcal N\\}",
+              "symbol_definitions": [
+                "pi_x projects an equivariant output onto coordinate x.",
+                "rho_x records pairs indistinguishable at that coordinate."
+              ],
+              "interpretation": "Equivariant expressivity must be tested separately at every output entry; vector-level distinguishability can conceal coordinate restrictions.",
+              "role": "Key refinement enabling correct equivariant universality statements.",
+              "assumptions": [
+                "G acts on a finite output set X.",
+                "N is a family of continuous G-equivariant functions."
+              ],
+              "derivation_outline": "Motivated by coordinate projection to stabilizer-invariant scalar functions and the CNN counterexample.",
+              "locator": "Definition 6, Section 5.1, p. 8",
+              "provenance": "Structured HTML",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Theorem 2 / Eq. (8)",
+              "latex": "\\rho(\\mathcal U_\\sigma(M_1,\\ldots,M_f,M^d))=\\rho(\\mathcal U_\\sigma(M_1,\\ldots,M_f,M^{d+1}))\\Rightarrow \\mathcal U_\\sigma(M_1,\\ldots,M_f,M^{d+1})=C_\\rho(V_0,\\mathbb R^X)",
+              "symbol_definitions": [
+                "M is an equivariant output layer containing the identity.",
+                "M^d denotes d repetitions.",
+                "rho is the entry-wise separation tuple."
+              ],
+              "interpretation": "Once another layer no longer improves entry-wise separation, one additional layer is sufficient to saturate the compatible continuous equivariant function class.",
+              "role": "Depth-based equivariant universality theorem.",
+              "assumptions": [
+                "Finite group and permutation representations.",
+                "M contains the identity.",
+                "Entry-wise separation stabilizes at depth d."
+              ],
+              "derivation_outline": "Reduce coordinatewise to invariant approximation under stabilizer groups and use the stabilized layer to synchronize the equivariant coordinates.",
+              "locator": "Theorem 2, Section 5.2, Eq. (8), p. 9",
+              "provenance": "Structured HTML",
+              "extraction_confidence": 0.98,
+              "interpretation_confidence": 0.98
+            }
+          ],
+          "experiments": "The paper contains no empirical experiments, datasets, numerical simulations, or quantitative architecture benchmarks. Examples are analytic: the authors instantiate their layer spaces with ordinary affine layers, invariant pooling, finite-group convolutions, and PointNet layers, and use a width-one convolutional counterexample to distinguish global from entry-wise separation (Examples 1-3, pp. 3-8). The absence of experiments is appropriate for the theorem's generality but leaves open how large the sufficient stabilization depth is in practical architectures and whether the proposed output-layer modifications improve trainability or sample efficiency.",
+          "limitations": [
+            "The group is finite and representations are permutation representations; continuous/compact Lie-group settings are not directly covered.",
+            "Results characterize density but give no approximation rates, width requirements, parameter counts, or constructive depth threshold.",
+            "The stabilization depth is guaranteed to exist but may be hard to determine and the sufficient threshold need not be necessary (discussion after Theorem 3, p. 9).",
+            "The theory does not address optimization, statistical generalization, noise, or empirical performance.",
+            "Universality is at fixed representation dimensions and does not imply transfer across input cardinalities."
+          ],
+          "reproducibility": "This is a self-contained theoretical paper. Definitions, theorem statements, and proofs are provided in the main text and appendices, with earlier lemmas explicitly cited. Reproduction consists of checking finite-group representation and topology arguments rather than running code. The report used arXiv v2 dated 4 June 2026 and the ICLR 2026 version, prioritizing structured HTML and checking PDF pagination. No software artifact is needed for the central claims.",
+          "research_ideas": [
+            "Extend entry-wise separation to compact groups and Hilbert-valued outputs using orbit types or isotypic projections.",
+            "Determine stabilization depth for message-passing GNNs in terms of Weisfeiler-Leman refinement and graph size.",
+            "Combine entry-wise universality with limit-space consistency to obtain equivariant any-dimensional approximation theorems.",
+            "Develop quantitative rates after the readout repair, including dependence on orbit count, stabilizer structure, and channel multiplicity.",
+            "Test whether architectural readouts predicted to close approximation gaps also improve optimization on controlled equivariant regression tasks."
+          ],
+          "warnings": [
+            "Universality here is constrained by separation and fixed finite-group representations; it is not unrestricted universality.",
+            "A finite sufficient depth is not an explicit practical depth bound.",
+            "No experimental evidence accompanies the theoretical claims."
+          ]
+        }
+      },
+      {
+        "id": "2607.26699",
+        "title": "Universality and Approximation Rates of Graph Neural Networks with Random Features",
+        "authors": [
+          "Lukas Gonon",
+          "Thilo Meyer-Brandis",
+          "Niklas Weber"
+        ],
+        "primaryCategory": "cs.LG",
+        "publishedAt": "2026-07-29T00:00:00.000Z",
+        "updatedAt": "2026-07-29T00:00:00.000Z",
+        "score": 91,
+        "breakdown": {
+          "semantic": 88,
+          "topic": 90,
+          "method": 94,
+          "style": 96,
+          "recency": 100
+        },
+        "rationale": "A rigorous fixed-size GNN universality result that handles measurable invariant/equivariant functions and adds explicit depth/weight rates for smooth targets; highly relevant to approximation theory, with a clear boundary from size transfer.",
+        "tags": [
+          "graph neural networks",
+          "random features",
+          "universality",
+          "approximation rates",
+          "permutation equivariance"
+        ],
+        "mathDensity": "High",
+        "reportStatus": "Ready",
+        "abstractUrl": "https://arxiv.org/abs/2607.26699",
+        "pdfUrl": "https://arxiv.org/pdf/2607.26699",
+        "htmlUrl": "https://arxiv.org/html/2607.26699",
+        "sourceUrl": "https://arxiv.org/src/2607.26699",
+        "firstRecommendedAt": "2026-08-12T08:16:34.035Z",
+        "runId": "scan-2026-08-12T08-16-34-035Z",
+        "report": {
+          "report_level": "full",
+          "executive_summary": "This paper proves universal approximation and quantitative rates for permutation-equivariant neural networks (PENNs), a message-passing GNN class augmented with random node features. For directed graphs with a fixed number N of nodes, multidimensional node features, and multidimensional edge features, Theorem 9 states that any measurable permutation-equivariant target can be approximated in probability to arbitrary accuracy, provided the added random features give nodes unique identifiers with high probability (pp. 15-16). Invariant targets follow by repeating a graph-level value at every node and reading or averaging coordinates (Remark 13 and Corollary 14, p. 18). The architecture combines a local message-passing summary for each node with a global sum of transformed local summaries (Eqs. (4)-(5), pp. 15-16). Random identifiers break equivariance for a single realization, so the authors analyze averaging over independent feature draws: the conditional expectation is equivariant, Monte Carlo averages approach it, and the universality statement persists for any finite number of draws (Proposition 15 and Theorem 16, pp. 20-21). For k-times continuously differentiable targets on compact feature domains, Theorem 18 bounds each feedforward component's depth by O(log(1/epsilon)) and nonzero weights by O(epsilon^{-c_2/(k-1)} log^2(1/epsilon)) with high probability (pp. 23-25). This is a strong approximation-theory result but not a variable-size theorem: N is fixed and appears in constants and exponents. It gives no empirical experiments, and its use of random unique identifiers may be computationally expensive or statistically awkward, especially because averaging all permutations is infeasible.",
+          "why_it_fits": "The paper matches the profile's interests in GNN expressivity, permutation invariance/equivariance, universal approximation, and quantitative mathematical guarantees. Its major added value over qualitative universality work is an explicit complexity rate for smooth targets. The distinction between measurable approximation in probability and uniform approximation on a compact domain is handled carefully, which aligns with the profile's preference for rigorous function-space statements. It also exposes a useful tension for any-dimensional research. Random identifiers can make fixed-N message passing universal, but the construction depends on N and sacrifices realization-wise equivariance; therefore it does not automatically define one coherent model across sizes. This makes the paper a valuable negative/contrast case for size transfer: expressivity obtained by individualizing nodes may conflict with dimension-independent consistency. Pairing the result with graphon or manifold limit theory could clarify which symmetry-breaking features vanish, stabilize, or admit exchangeable couplings as N changes. The averaging argument may also connect to randomized equivariant architectures and to RPEARL-style random encodings in the leading paper, though the assumptions and goals differ.",
+          "problem_formulation": "The graph domain D_{N,d,d'} contains directed graphs with exactly N nodes, node features in R^d, and edge features in R^{d'}. The symmetric group S_N permutes node and adjacency tensors. A PENN computes, for each node k, a local aggregate over incoming neighbors and a global aggregate over all nodes; its component maps rho, phi, alpha, and psi are feedforward networks (Definition 1 and Eq. (5), pp. 6 and 16). Random features R in R^{N x d_r} are concatenated to node features. The essential condition is finite unique node features: with high probability a measurable hashing map assigns different labels to every node (Definition 3, pp. 10-11). The qualitative question is whether this augmented PENN approximates any measurable equivariant or invariant f in probability under a graph distribution. The quantitative question restricts node/edge features to [0,1], assumes f is k-times continuously differentiable with derivatives bounded by kappa, and asks how component-network depth and sparsity scale with epsilon and confidence delta (Eq. (7) and Theorem 18, pp. 22-23).",
+          "contributions": [
+            "A universality theorem for measurable permutation-equivariant functions on fixed-size directed attributed graphs using PENNs with partially random node features (Theorem 9, pp. 15-16).",
+            "Extensions to probability measures already inducing unique node features, uniform approximation for continuous targets under finite-support unique identifiers, and invariant graph outputs (Theorem 11, Corollaries 12 and 14, pp. 16-18).",
+            "An analysis of permutation equivariance in expectation and Monte Carlo feature averaging that preserves approximation power (Proposition 15 and Theorem 16, pp. 20-21).",
+            "Explicit ReLU component complexity bounds for smooth equivariant/invariant functions, separating logarithmic depth from polynomial weight growth (Theorem 18, pp. 23-25).",
+            "Expressivity examples explaining why random identifiers distinguish graphs beyond ordinary message-passing limitations (Appendix E, Figures 1-3)."
+          ],
+          "method": "Unique random node features let the authors encode a canonical node-specific description within a permutation-equivariant aggregate-and-combine template. A representation proposition first shows that on any set of graphs with finite unique node features, a measurable equivariant target can be expressed using four measurable local/global component functions. A neural approximation proposition then approximates these measurable components under the pushforward input distribution. Intersecting the high-probability uniqueness event with the component approximation event proves Theorem 9. For compact continuous targets with random permutations of deterministic distinct identifiers, the component functions can be replaced by continuous extensions and uniformly approximated. The equivariance-in-expectation result uses a permutation-invariant feature distribution and independence from the graph to commute conditional expectation with permutation. Quantitative rates discretize the identifier interval into bins, construct smooth component representations away from bin boundaries, control the probability of collisions/boundary events, and apply known ReLU approximation rates for smooth functions. The resulting exponent c_2 depends on graph size and input dimensions, while higher regularity k improves the epsilon exponent. The probability statement has two logically separate sources: random identifiers must avoid collisions and bad bin boundaries, and the component networks must approximate the constructed representation. Corollary 19 shows that random permutations of a fixed set of N distinct identifiers can make the rate statement sure rather than merely high probability. This strengthens approximation but makes the dependence on fixed N even more explicit. The Monte Carlo averaging theorem does not give a finite-M equivariance-error rate; it preserves target approximation for any M while the law of large numbers motivates equivariance improvement as M grows (Section 4.2, pp. 19-21).",
+          "key_equations": [
+            {
+              "label": "PENN representation / Eqs. (4)-(5)",
+              "latex": "g(x,a)_k=\\rho\\!\\left(x_k,\\sum_{i\\in\\mathcal N(k)}\\phi(x_k,a_{ik},x_i),\\sum_{j=1}^N\\alpha\\!\\left(x_j,\\sum_{i\\in\\mathcal N(j)}\\psi(x_j,a_{ij},x_i)\\right)\\right)",
+              "symbol_definitions": [
+                "x_k is node k's feature and a_ik an edge feature.",
+                "phi and psi form local messages; alpha forms global summaries; rho produces the output."
+              ],
+              "interpretation": "The architecture combines ordinary message passing with a global summary; unique node features make this template represent any measurable equivariant target on the relevant set.",
+              "role": "Constructive normal form underlying all universality results.",
+              "assumptions": [
+                "Fixed N directed attributed graphs.",
+                "Finite unique node features on the represented subset."
+              ],
+              "derivation_outline": "A representation proposition encodes the graph and target relative to unique node identities through injective aggregate maps.",
+              "locator": "Eq. (4), proof of Theorem 9, pp. 15-16; neural version Eq. (5), p. 16",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.98,
+              "interpretation_confidence": 0.98
+            },
+            {
+              "label": "Theorem 9",
+              "latex": "\\Pr(\\|f(X,A)-\\operatorname{PENN}(X\\Vert R,A)\\|\\le\\varepsilon)\\ge1-\\delta",
+              "symbol_definitions": [
+                "f is any measurable permutation-equivariant target.",
+                "R supplies finite unique node features with high probability.",
+                "X||R denotes feature concatenation."
+              ],
+              "interpretation": "For a chosen input distribution and confidence, a random-feature PENN approximates any measurable equivariant graph function in probability.",
+              "role": "Primary qualitative universal approximation theorem.",
+              "assumptions": [
+                "N,d,d',d_r,l are fixed.",
+                "R provides finite unique node features with high probability.",
+                "Approximation is distributional/in probability, not uniform over the full unbounded domain."
+              ],
+              "derivation_outline": "Represent f exactly on the unique-feature event, approximate its measurable component maps in probability, and union-bound the failures.",
+              "locator": "Theorem 9, Section 4.1, pp. 15-16",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Theorem 18 / Eq. (8)",
+              "latex": "L(A)\\le c_1\\log_2(1/\\varepsilon),\\qquad M(A)\\le c_1\\varepsilon^{-c_2/(k-1)}[\\log_2(1/\\varepsilon)]^2",
+              "symbol_definitions": [
+                "L(A) is component-network depth and M(A) its nonzero weights.",
+                "k is target smoothness.",
+                "c_1 depends also on kappa and output dimension; c_2 depends on N,d,d',delta."
+              ],
+              "interpretation": "Depth grows only logarithmically with accuracy, but parameter count grows polynomially and can suffer a graph-size/dimension curse; smoother targets improve the exponent.",
+              "role": "Quantitative approximation-rate theorem for smooth targets.",
+              "assumptions": [
+                "Uniform iid scalar random identifiers.",
+                "k>=2 and bounded derivatives on compact graph-feature domain.",
+                "High-probability uniform approximation with confidence 1-delta."
+              ],
+              "derivation_outline": "Construct smooth component maps off collision boundaries, control the good random-feature event, then apply quantitative ReLU approximation theorems.",
+              "locator": "Theorem 18, Section 5, Eq. (8), pp. 23-25",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.99,
+              "interpretation_confidence": 0.98
+            }
+          ],
+          "experiments": "No empirical experiments are reported. Figures in the appendix are schematic graph pairs illustrating message-passing indistinguishability and how unique random node features separate neighborhoods; they are not benchmark results. The paper therefore does not establish whether the theoretically universal PENN is competitive in runtime, sample complexity, optimization, or predictive accuracy. Its suggestion that random-feature PENNs serve as strong baselines is a theoretical recommendation rather than an empirical conclusion.",
+          "limitations": [
+            "All theorems fix N; constants depend on N, so universality and rates do not imply one model transfers across graph sizes.",
+            "A single random-feature realization need not be permutation equivariant; exact expectation is generally intractable and finite Monte Carlo averaging only approaches it.",
+            "The qualitative theorem is existence-based and distribution-dependent, with no sample-complexity or training guarantee.",
+            "The rate can suffer a curse of dimensionality through c_2(N,d,d',delta), and component dimensions may be large.",
+            "There are no empirical studies of optimization, efficiency, or comparison with practical GNNs."
+          ],
+          "reproducibility": "The theoretical assumptions, architecture, probability events, and proofs are detailed across 57 pages and appendices. The quantitative construction exposes constants and points to Eq. (30) for c_2. Reproducing the result is a proof-verification exercise; there is no empirical pipeline or code dependency for the main claims. The report used arXiv v1 dated 29 July 2026 and reconstructed formulas from the PDF because structured HTML was unavailable.",
+          "research_ideas": [
+            "Ask whether random identifiers can be coupled projectively across N so fixed-size universal PENNs converge to a graphon or manifold operator.",
+            "Quantify the tradeoff between number of feature resamples, approximate equivariance, and approximation error.",
+            "Replace unique identifiers with transferable diffusion or spectral random features and determine what universality is retained.",
+            "Seek rates depending on intrinsic graph-function complexity rather than ambient N,d,d'.",
+            "Compare entry-wise separation universality with the random-feature construction to identify which coordinate constraints random identifiers actually remove."
+          ],
+          "warnings": [
+            "The result is fixed-size despite its graph generality; do not interpret it as size generalization.",
+            "Random features enhance expressivity by breaking realization-wise symmetry, while equivariance is recovered only in expectation or by averaging.",
+            "Equations were reconstructed from the arXiv PDF."
+          ]
+        }
+      },
+      {
+        "id": "2601.09831",
+        "title": "A New Convergence Analysis of Plug-and-Play Proximal Gradient Descent Under Prior Mismatch",
+        "authors": [
+          "Guixian Xu",
+          "Jinglai Li",
+          "Junqi Tang"
+        ],
+        "primaryCategory": "cs.LG",
+        "publishedAt": "2026-01-14T00:00:00.000Z",
+        "updatedAt": "2026-01-28T00:00:00.000Z",
+        "score": 83,
+        "breakdown": {
+          "semantic": 80,
+          "topic": 76,
+          "method": 91,
+          "style": 93,
+          "recency": 93
+        },
+        "rationale": "A distinct secondary-lane match: nonconvex plug-and-play convergence under prior mismatch, with an explicit equivariant group-averaging improvement in the error term.",
+        "tags": [
+          "plug-and-play",
+          "proximal gradient",
+          "prior mismatch",
+          "equivariance",
+          "inverse problems"
+        ],
+        "mathDensity": "High",
+        "reportStatus": "Ready",
+        "abstractUrl": "https://arxiv.org/abs/2601.09831",
+        "pdfUrl": "https://arxiv.org/pdf/2601.09831",
+        "htmlUrl": "https://arxiv.org/html/2601.09831",
+        "sourceUrl": "https://arxiv.org/src/2601.09831",
+        "firstRecommendedAt": "2026-08-12T08:16:34.035Z",
+        "runId": "scan-2026-08-12T08-16-34-035Z",
+        "report": {
+          "report_level": "full",
+          "executive_summary": "This paper gives a convergence analysis for plug-and-play proximal gradient descent (PnP-PGD) when the deployed denoiser is trained on a distribution different from the target prior. It interprets a gradient-step MMSE denoiser as the proximal map of a possibly nonconvex regularizer and treats the mismatched denoiser as an inexact proximal step. Under Lipschitz-gradient and bounded-below assumptions, equality of target and mismatched denoiser ranges, and an epsilon_k-optimality condition, Theorem 2.1 bounds the average squared stationarity measure by an O(1/t) objective-gap term plus an averaged cumulative mismatch error (Eq. (14), p. 5). If the epsilon_k sequence is summable, the gradient of the target objective converges to zero. The analysis allows nonconvex data fidelities and regularizers and expansive denoisers; it avoids bounded-iterate assumptions used by some prior mismatch analyses (Table 1 and Section 2, pp. 2-4). The paper then models structural mismatch as anisotropic denoiser bias and group-averages transformed denoiser outputs. Under invariant target density and isotropic Gaussian noise, the target denoiser is equivariant. Jensen-style strict bias reduction yields a smaller error term when the bias varies across group actions (Lemma 2.2, Eq. (17), p. 7), and Theorem 2.3 substitutes that reduced term into the PnP convergence bound (Eq. (20), pp. 7-8). The work is entirely theoretical: there are no inverse-problem experiments, learned denoisers, or numerical estimates of mismatch errors. Several assumptions remain difficult to verify, especially equal denoiser ranges and per-iteration epsilon-optimality relative to the unknown target prior.",
+          "why_it_fits": "This is a secondary but meaningful fit to the profile's interests in learned proximal methods, inverse problems, nonconvex optimization, and equivariant architectures. It provides a bridge between two lanes that are often treated separately: convergence of learned proximal algorithms and symmetry-based bias reduction. The stationarity guarantee is explicit about how prior mismatch accumulates, making it potentially useful for comparing proximal matching or denoiser-regularized approaches. The group-averaging argument also turns equivariance into a quantitative improvement in an optimization bound rather than only an expressivity or sample-efficiency principle. However, the fit is below the three theory papers because it does not address variable-size learning, limit spaces, or universality, and it lacks experiments. Its assumptions should be viewed as a starting point for stronger, observable mismatch conditions rather than a complete operational guarantee.",
+          "problem_formulation": "The target inverse problem minimizes F_{lambda,sigma}(x)=lambda f(x)+phi_sigma(x), where f is differentiable and phi_sigma is the regularizer whose proximal map equals a target gradient-step denoiser D_sigma (Eqs. (6)-(10), pp. 3-4). In deployment, D_sigma is replaced by a mismatched MMSE denoiser Dhat_sigma trained under another prior. Each mismatched output must be an epsilon_{k+1}-optimal solution of the target proximal subproblem (Assumption 2.5, Eq. (11), p. 4), equivalently controlling its distance to the target denoiser via Eq. (13). The aim is to bound stationarity of F under PnP-PGD iterates. For the equivariant extension, the ideal density is invariant under affine transformations with isometric linear parts and observation noise is isotropic. The deployed denoiser has bias E relative to the ideal one; averaging inverse-transformed denoiser outputs over the group produces an equivariant denoiser whose anisotropic bias is smaller.",
+          "contributions": [
+            "A PnP-PGD stationarity bound under mismatched MMSE denoisers without bounded-iterate assumptions (Theorem 2.1, Eq. (14), p. 5).",
+            "Coverage of nonconvex fidelity/regularization and potentially expansive denoisers through the gradient-step/proximal characterization (Proposition 2.1 and Assumptions 2.1-2.3, pp. 3-4).",
+            "A structural-prior-mismatch interpretation connecting architectural bias with transformation groups (Section 2.3, pp. 5-6).",
+            "A strict reduction of anisotropic denoiser bias by equivariant group averaging (Lemma 2.2, Eq. (17), p. 7).",
+            "An EPnP-PGD convergence bound in which the mismatch term is tightened by the variance across group actions (Theorem 2.3, Eq. (20), pp. 7-8)."
+          ],
+          "method": "A gradient-step denoiser D=Id-grad g with Lipschitz residual smaller than one is represented as a proximal operator of a smooth, possibly nonconvex phi. The mismatched denoiser output is analyzed as an inexact solution to this target proximal step. Descent inequalities relate the change in F to step norms and epsilon_k; Lipschitz properties then convert step control into a stationarity bound. Summing and telescoping over t iterations produces Eq. (14), and summability of epsilon_k forces stationarity. For equivariant PnP, invariance of the target prior and isotropic noise imply equivariance of the MMSE target denoiser. Conjugating the mismatched denoiser by a sampled group transformation and averaging preserves the target component while averaging its bias. Strict convexity of the squared norm/Jensen reasoning makes the averaged anisotropic bias smaller than the average original bias. The paper defines the resulting reduction as a variance gain and inserts the smaller error sequence into the same telescoping convergence proof. A useful detail is that the denoiser itself need not be nonexpansive. The authors require the residual Id-D to be contractive; if its Lipschitz constant exceeds one, they propose relaxing the denoiser through D_alpha=alpha D+(1-alpha)Id with alpha small enough (Assumption 2.2 discussion, p. 4). Proposition 2.1 then supplies injectivity and a smooth implicit regularizer whose gradient has controlled Lipschitz constant. The matched-denoiser special case removes all epsilon terms and improves the leading constant from 16 to 8 (Theorem 2.2, Eq. (15), p. 5), helping isolate the price assigned to mismatch by this analysis. The group-averaged error is written as the average error minus a variance gain, so strict improvement disappears when the bias is already isotropic across transformations. The result therefore distinguishes symmetry-compatible systematic bias from arbitrary mismatch rather than claiming that averaging always improves every denoiser.",
+          "key_equations": [
+            {
+              "label": "Theorem 2.1 / Eq. (14)",
+              "latex": "\\min_{1\\le k\\le t}\\|\\nabla F_{\\lambda,\\sigma}(x_k)\\|^2\\le\\frac{16(F(x_0)-F^*)}{t(1-L_f)}+\\frac{1}{t}\\left(\\frac{16}{1-L_f}+\\frac{4}{1-L}\\right)\\sum_{k=1}^t\\epsilon_k",
+              "symbol_definitions": [
+                "F is the target nonconvex objective.",
+                "L_f is the fidelity-gradient Lipschitz constant and L the denoiser-residual constant.",
+                "epsilon_k measures mismatch as inexact target proximal optimality."
+              ],
+              "interpretation": "The usual O(1/t) stationarity rate is degraded by average cumulative prior mismatch; summable mismatch still yields asymptotic stationarity.",
+              "role": "Main mismatched PnP-PGD convergence guarantee.",
+              "assumptions": [
+                "Assumptions 2.1-2.5.",
+                "lambda L_f<1.",
+                "Target and mismatched denoisers share a range."
+              ],
+              "derivation_outline": "Establish an inexact descent inequality, relate iterate differences to gradient norm, sum over iterations, and telescope the bounded-below objective.",
+              "locator": "Theorem 2.1, Section 2.2, Eq. (14), p. 5",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.97,
+              "interpretation_confidence": 0.97
+            },
+            {
+              "label": "Lemma 2.2 / Eq. (17)",
+              "latex": "\\|\\widetilde E(x)\\|^2<\\int_G\\|E(T_gx)\\|^2d\\pi(g)=\\mathbb E_g[\\|E(T_gx)\\|^2]",
+              "symbol_definitions": [
+                "E is mismatched-denoiser bias.",
+                "E-tilde is bias after group averaging.",
+                "pi is normalized Haar measure and T_g a group action."
+              ],
+              "interpretation": "When bias is anisotropic, averaging conjugated denoisers strictly reduces squared bias relative to the group-average error.",
+              "role": "Mechanism by which equivariance tightens the convergence error term.",
+              "assumptions": [
+                "Bias varies nontrivially across group actions.",
+                "The group average is defined and transformations meet the stated isometry assumptions."
+              ],
+              "derivation_outline": "The target denoiser cancels by equivariance; strict convexity/Jensen bounds the norm of the average bias.",
+              "locator": "Lemma 2.2, Section 2.3, Eq. (17), p. 7",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.98,
+              "interpretation_confidence": 0.98
+            },
+            {
+              "label": "Theorem 2.3 / Eq. (20)",
+              "latex": "\\min_{1\\le k\\le t}\\|\\nabla F(x_k)\\|^2\\le\\frac{16(F(x_0)-F^*)}{t(1-L_f)}+\\frac{1}{t}\\left(\\frac{16}{1-L_f}+\\frac{4}{1-L}\\right)\\sum_{k=1}^t\\widetilde\\epsilon_k",
+              "symbol_definitions": [
+                "epsilon-tilde is the equivariantly reduced mismatch sequence."
+              ],
+              "interpretation": "EPnP has the same structural stationarity bound as PnP but a strictly smaller mismatch contribution when the bias is anisotropic.",
+              "role": "Main equivariant PnP convergence theorem.",
+              "assumptions": [
+                "Assumptions 2.1-2.7 and lambda L_f<1.",
+                "Anisotropic mismatch for strict improvement."
+              ],
+              "derivation_outline": "Apply Theorem 2.1's descent argument to the group-averaged denoiser and substitute the bias-reduction estimate.",
+              "locator": "Theorem 2.3, Section 2.3, Eq. (20), pp. 7-8",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.96,
+              "interpretation_confidence": 0.97
+            }
+          ],
+          "experiments": "No empirical section or numerical experiment is present. The paper does not test PnP-PGD or EPnP-PGD on imaging operators, compare target and mismatched denoisers, estimate epsilon_k, or demonstrate the predicted variance gain. Table 1 is a literature comparison of theoretical assumptions, not an experiment. Consequently the practical magnitude and verifiability of the improved bound remain unknown.",
+          "limitations": [
+            "Assumption 2.4 requires target and mismatched denoisers to have the same range, which may be hard to justify for learned priors.",
+            "Assumption 2.5 measures every deployed denoiser output against an unknown target proximal problem, making epsilon_k difficult to observe.",
+            "Convergence is to stationary points of a target nonconvex objective, not necessarily solutions of the inverse problem.",
+            "The equivariant improvement needs correct target invariance, isotropic noise, group integration, and anisotropic bias.",
+            "No experiments assess tightness, robustness, or computational cost."
+          ],
+          "reproducibility": "The paper supplies formal assumptions and appendix proofs, so the theorem can be checked from the PDF. There is no numerical pipeline, dataset, or code artifact to reproduce. The report used arXiv v2 dated 28 January 2026 and reconstructed equations from the PDF. Before implementing the method, a practitioner would need to specify a transformation group, Monte Carlo group average, denoiser training distributions, and a proxy for the unobservable target mismatch. A credible numerical test should separate distribution mismatch from architectural anisotropy: train a denoiser on one controlled image family, rotate or reflect both inputs and outputs, estimate the transformation-dependent residual against a target-domain oracle or high-quality proxy, and compare the cumulative empirical error term with stationarity curves. Without such an oracle, lower reconstruction loss alone would not verify Eq. (20), because that theorem concerns stationarity of the implicit target objective rather than direct ground-truth reconstruction error.",
+          "research_ideas": [
+            "Replace epsilon-optimality against an unknown target denoiser with an estimable distributional discrepancy or score-matching bound.",
+            "Analyze approximate rather than exact invariance and anisotropic measurement noise.",
+            "Connect proximal-matching objectives to a directly controlled epsilon_k sequence.",
+            "Test whether group averaging improves both convergence diagnostics and reconstruction quality under controlled training/test prior shifts.",
+            "Extend the argument to variable-resolution inverse problems where denoisers and forward operators share a continuum limit."
+          ],
+          "warnings": [
+            "The practical assumptions are weaker than some bounded-iterate analyses but still not readily verifiable.",
+            "Strict equivariant improvement applies to anisotropic bias under the specified symmetry/noise model.",
+            "The paper has no empirical validation and equations were reconstructed from PDF."
+          ]
+        }
+      },
+      {
+        "id": "2408.08823",
+        "title": "Optimal Symmetries in Binary Classification",
+        "authors": [
+          "Vishal S. Ngairangbam",
+          "Michael Spannowsky"
+        ],
+        "primaryCategory": "cs.LG",
+        "publishedAt": "2024-08-16T00:00:00.000Z",
+        "updatedAt": "2024-08-16T00:00:00.000Z",
+        "score": 83,
+        "breakdown": {
+          "semantic": 82,
+          "topic": 84,
+          "method": 86,
+          "style": 88,
+          "recency": 60
+        },
+        "rationale": "A diverse symmetry-design result: it connects optimal classification to likelihood-ratio fibres and shows theoretically and empirically why imposing a larger group than the task supports can hurt.",
+        "tags": [
+          "equivariance",
+          "binary classification",
+          "Neyman-Pearson",
+          "group actions",
+          "sample efficiency"
+        ],
+        "mathDensity": "Medium",
+        "reportStatus": "Ready",
+        "abstractUrl": "https://arxiv.org/abs/2408.08823",
+        "pdfUrl": "https://arxiv.org/pdf/2408.08823",
+        "htmlUrl": "https://arxiv.org/html/2408.08823",
+        "sourceUrl": "https://arxiv.org/src/2408.08823",
+        "firstRecommendedAt": "2026-08-12T08:16:34.035Z",
+        "runId": "scan-2026-08-12T08-16-34-035Z",
+        "report": {
+          "report_level": "full",
+          "executive_summary": "This paper studies how to choose a symmetry group for binary classification rather than assuming that the largest available group gives the best inductive bias. Starting from Neyman-Pearson optimality, an optimal score must be a monotone function of the likelihood ratio P_1/P_0, so its level sets—or fibres—must match those of that ratio (Observation 1, p. 5). Group-invariant functions are constant on group orbits, and equivariant maps identify at least those points connected by stabilizer elements of the output (Observations 2-3 and Eqs. (3)-(7), pp. 5-6). The authors define input/output group actions as optimal when the corresponding equivariant function class contains a map with the likelihood ratio's fibre decomposition (Definition 9, p. 6). For invariant classifiers this gives a crisp condition: a group action is optimal if and only if the likelihood ratio is invariant under it (Observation 4, p. 6). A subgroup of a valid invariant group remains valid but may use fewer equivalences and therefore less sample efficiency; a strictly larger group can merge likelihood-ratio fibres and make optimal classification impossible. The equivariant case depends additionally on the hidden representation's group action, and the strongest claims there are presented partly as a conjectural extension. Synthetic point-cloud experiments compare E(3), O(3), and O(2) invariant/equivariant networks on sphere-versus-cylinder tasks. O(2), the symmetry shared by the likelihood ratio, achieves essentially perfect background rejection with both 10k and 100k samples per class, whereas larger groups perform worse, especially for invariant models (Tables 1-2, p. 9). The result is conceptually useful but narrow: binary classification, known class distributions/symmetries, simple 3D experiments, and no general learning bound.",
+          "why_it_fits": "The paper fits the profile's strong interest in invariant/equivariant architectures and adds a design perspective not covered by the universality selection. Universality asks whether a model spans all functions compatible with an imposed group; this paper asks whether the imposed group is compatible with the statistically optimal target in the first place. Its fibre formulation connects group orbits, stabilizers, and likelihood-ratio level sets in a way that could inform representation selection. This is especially relevant when building any-dimensional or scientific models where abundant physical symmetries tempt designers to impose overly large groups. The paper's warning is precise: a larger group can improve sample efficiency only if it does not collapse target-relevant distinctions. The fit is lower than the newer theory papers because the work sits just inside the two-year window, focuses on binary classification, and leaves parts of the equivariant extension informal. Still, it provides empirical evidence and a clear counterweight to blanket claims that more symmetry is always better.",
+          "problem_formulation": "Data X come from either P_0 or P_1 on a shared domain D, and a scalar classifier threshold defines false-positive rate epsilon_0 and true-positive rate epsilon_1 (Section 3, pp. 4-5). Neyman-Pearson theory makes monotone transformations of lambda(X)=P_1(X)/P_0(X) optimal across thresholds. A group G acts on input space X and hidden/output space H. Invariant functions are constant along G-orbits; equivariant functions map input transformations through an output action, so stabilizers determine subsets that must share a fibre (Section 4, Eqs. (3)-(7), pp. 5-6). The selection problem is to choose input and output group actions whose forced fibres do not merge distinct likelihood-ratio fibres. For invariant classifiers, this reduces to requiring lambda to be G-invariant. For equivariant feature extractors, optimality also depends on the hidden action and whether stabilizer-induced fibres respect lambda.",
+          "contributions": [
+            "A Neyman-Pearson formulation of symmetry selection in terms of likelihood-ratio fibre decompositions (Observation 1, p. 5).",
+            "Orbit- and stabilizer-based lower bounds on fibres of invariant and equivariant maps (Observations 2-3, Eqs. (3)-(7), pp. 5-6).",
+            "A definition of an optimal pair of input/output group actions for binary classification (Definition 9, p. 6).",
+            "A necessary-and-sufficient condition for invariant symmetry optimality: invariance of the likelihood ratio (Observation 4, p. 6).",
+            "Synthetic 3D point-cloud evidence that the task-appropriate O(2) group outperforms larger O(3) and E(3) choices (Section 6, Tables 1-2, pp. 8-9)."
+          ],
+          "method": "The theoretical argument first translates ROC optimality into a geometric condition on classifier fibres. It then studies which equalities are forced by group actions. For invariant maps, every orbit lies inside one fibre. For equivariant maps, the subset of an orbit reached by elements stabilizing the output must lie in one fibre. Comparing these minimal fibres with likelihood-ratio fibres yields the definition of optimal symmetry. In the invariant case, the likelihood ratio being G-invariant is both necessary and sufficient. If only a subgroup preserves it, imposing a larger group destroys optimality by merging target-distinct points. The experiments generate 30-point clouds from spheres and cylinders, add Gaussian coordinate noise with standard deviation corresponding to diagonal covariance 0.3, and train architectures based on classical-group equivariant layers. They compare invariant and equivariant E(3), O(3), and axis-aligned O(2) models at two training-set sizes over ten initializations, evaluating validation loss and background rejection at 95% signal acceptance. The subgroup argument has an important asymmetry. If G is a valid invariant symmetry, restricting to a proper subgroup G' remains capable of representing the likelihood ratio because it forces fewer identifications, but it may sacrifice sample efficiency by creating smaller orbits. Enlarging beyond the invariance group can instead be irrecoverably harmful because every invariant function must identify points whose likelihood ratios differ. For equivariant feature extraction, the output action changes stabilizers and hence changes the forced fibres; choosing only an input group is therefore insufficient. The paper argues that larger-group equivariance can remain useful if hidden actions are engineered to be trivial on target-preserving subgroups, but it defers a fully general theorem for this case (Section 5.2, pp. 7-8).",
+          "key_equations": [
+            {
+              "label": "Observation 1",
+              "latex": "\\widehat f\\text{ is ROC-optimal for all }\\epsilon_0\\iff \\widehat f=m(P_1/P_0)\\text{ for a monotone }m",
+              "symbol_definitions": [
+                "P_0 and P_1 are class densities.",
+                "epsilon_0 is false-positive tolerance.",
+                "m preserves likelihood-ratio ordering."
+              ],
+              "interpretation": "Optimal classification depends only on likelihood-ratio level sets; any architectural symmetry that merges different levels prevents optimality.",
+              "role": "Statistical foundation for the symmetry criterion.",
+              "assumptions": [
+                "Binary simple hypotheses with overlapping support.",
+                "Neyman-Pearson ROC optimality across thresholds."
+              ],
+              "derivation_outline": "Threshold regions of an optimal test are likelihood-ratio superlevel sets; monotone transforms preserve them.",
+              "locator": "Observation 1, Section 3, p. 5",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.96,
+              "interpretation_confidence": 0.99
+            },
+            {
+              "label": "Invariant fibre / Eqs. (3)-(4)",
+              "latex": "h(A_X(g,X))=h(X),\\qquad h^{-1}(H)=\\bigcup_{I\\in F}\\Omega_X(I)",
+              "symbol_definitions": [
+                "A_X is the G-action.",
+                "Omega_X(I) is an orbit indexed by invariant I.",
+                "F collects orbits mapped to the same output H."
+              ],
+              "interpretation": "Invariant architectures cannot distinguish points in the same orbit and may merge several orbits, fixing a minimum fibre structure before learning.",
+              "role": "Bridge from group action to representational constraints.",
+              "assumptions": [
+                "h is G-invariant."
+              ],
+              "derivation_outline": "Apply invariance to every point reached by the group action and collect all equal-output orbits.",
+              "locator": "Observation 2 and Eqs. (3)-(4), Section 4.1, p. 5",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.98,
+              "interpretation_confidence": 0.98
+            },
+            {
+              "label": "Observation 4",
+              "latex": "G\\text{ is optimal for invariant binary classification}\\iff (P_1/P_0)(A_X(g,X))=(P_1/P_0)(X)\\;\\forall g",
+              "symbol_definitions": [
+                "G acts on the input domain.",
+                "P_1/P_0 is the likelihood ratio."
+              ],
+              "interpretation": "A symmetry is safe exactly when it preserves the target statistic; larger is beneficial only inside this compatibility boundary.",
+              "role": "Main invariant symmetry-selection criterion.",
+              "assumptions": [
+                "Invariant classifier class is universal within G-invariant functions.",
+                "Binary Neyman-Pearson setting."
+              ],
+              "derivation_outline": "Combine the optimal likelihood-ratio fibre condition with the orbit fibres forced by invariance.",
+              "locator": "Observation 4, Section 5.1, p. 6",
+              "provenance": "PDF Reconstruction",
+              "extraction_confidence": 0.97,
+              "interpretation_confidence": 0.99
+            }
+          ],
+          "experiments": "Two synthetic tasks classify 30-point clouds sampled from a sphere versus a cylinder. The uniform task uses unit-radius shapes; the truncated-normal task makes probability symmetry, rather than only support, decisive. Gaussian coordinate noise is added, and training uses 10k or 100k samples per class with ten random initializations (Section 6, p. 8). At 95% signal acceptance, O(2) invariant and equivariant models achieve 1.000 background rejection on the uniform task at both data sizes. O(3) invariant rises from 0.864 to 0.905 and E(3) invariant from 0.853 to 0.868; equivariant larger groups improve but remain below O(2) (Table 1, p. 9). On the harder truncated-normal task, O(2) remains about 0.998-0.999, O(3) about 0.988-0.995, and E(3) invariant is only 0.331 at 10k and 0.652 at 100k (Table 2, p. 9). The results support the claim that a correct smaller group can be both more accurate and more sample-efficient, but they cover only simple synthetic geometry and do not isolate architecture capacity across groups.",
+          "limitations": [
+            "The formal optimality result is for binary classification with likelihood-ratio structure; multiclass and regression extensions are absent.",
+            "Task symmetries of P_0 and P_1 are assumed known, whereas real distributions are only observed through samples.",
+            "The equivariant hidden-representation discussion includes conjectural elements and is less complete than the invariant criterion.",
+            "Experiments use only synthetic sphere/cylinder point clouds and three classical groups.",
+            "No generalization bound quantifies gains or penalties from symmetry mismatch."
+          ],
+          "reproducibility": "The paper specifies distributions, point count, noise level, training-set sizes, groups, repetition count, and evaluation metric; supplementary material contains architecture details. The report used the arXiv v1 PDF dated 16 August 2024. Exact optimizer settings, seeds, and code availability were not identified in the inspected main text, so numerical replication requires consulting the supplement and repository metadata.",
+          "research_ideas": [
+            "Estimate likelihood-ratio fibre compatibility from data to choose groups adaptively rather than from known distributions.",
+            "Extend optimal-symmetry criteria to multiclass sufficient statistics and equivariant regression.",
+            "Combine the fibre criterion with entry-wise separation universality for a full target-compatibility plus approximation theory.",
+            "Study approximate symmetries and bound excess risk caused by orbit-wise variation of the likelihood ratio.",
+            "Test subgroup selection in variable-size scientific datasets where symmetry and discretization refinement interact."
+          ],
+          "warnings": [
+            "The paper is near the lower boundary of the two-year scan window.",
+            "The largest-group-is-worse conclusion is task-dependent, not a universal rejection of larger symmetries.",
+            "Some equivariant claims are motivated as conjectural rather than fully proved."
+          ]
+        }
       }
     ]
   },
   "activity": [
+    {
+      "id": "9dd15d32-e277-41ee-bd94-158a8bf73538",
+      "at": "2026-08-12T08:16:34.049Z",
+      "type": "scan",
+      "title": "arXiv scan selected 5 papers",
+      "detail": "10 candidates reviewed with profile v3."
+    },
     {
       "id": "beb5afc7-bf3c-4fbe-8832-564aedc3fde7",
       "at": "2026-08-11T03:22:49.774Z",
